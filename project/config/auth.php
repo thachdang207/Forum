@@ -45,6 +45,16 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+//
+//        'user' => [
+//            'driver' => 'token',
+//            'provider' => 'users'
+//        ],
+//
+//        'user-api' => [
+//            'driver' => 'token',
+//            'provider' => 'users'
+//        ]
     ],
 
     /*
