@@ -20,13 +20,13 @@ class PostController extends Controller
         ->select('users.name', 'posts.*')
         ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
         ->get();
-        $count_comments = Post::join('comments', 'posts.id', '=', 'comments.post_id')
-        ->select('comments.content','posts.*')
-        ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
-        ->get();
-        // dd(count($count_comments));
-        $categories=Category::Get();
-        return view('posts/index',['posts'=>$result,'categories'=>$categories,'comments'=>$count_comments]);
+        //$categories=Category::Get();
+        // $result=Post::join('users', 'posts.user_id', '=', 'users.id')
+        // ->join('comments', 'posts.id', '=', 'comments.post_id')
+        // ->select('posts.*', 'users.name', 'comments.content as content_comment')
+        // ->get();
+        // dd($posts);
+        return view('posts/index',['posts'=>$result]);
     }
 
     /**
@@ -142,9 +142,6 @@ class PostController extends Controller
         // Comment::destroy()
         // $post1 = Post::find($post->id);
         // $post1->comments()->detach();
-        $post->foreign('post_id')
-        ->references('id')->on('posts')
-        ->onDelete('cascade');
         POST::destroy($post->id);
         return redirect()->route('posts.index');
     }
