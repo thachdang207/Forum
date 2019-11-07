@@ -63,6 +63,7 @@
                 <a href="#">
                   {{ $post->name }}
                 </a>
+                <p>Num cmt: {{$post->num}}</p>
               </div>
             </li>
           </div>
