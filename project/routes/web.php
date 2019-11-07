@@ -21,3 +21,5 @@ Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
