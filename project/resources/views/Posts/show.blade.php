@@ -16,7 +16,7 @@
         <div class="row d-flex">
             <div class="col-12 col-md-8 col-sm-12">
                 <h3>{{ $post->title }}</h3>
-                <button class="mb-5">{{ $category->name }}</button>
+                <span class="badge badge-success mb-5">{{ $category->name }}</span>
                 <p>{{ $post->content }}</p>
                 <div class="d-flex justify-content-end">
                     {{-- <p>by <a href="{{ $user->id }}">{{ $user->name }}</a></p> --}}
@@ -31,7 +31,7 @@
                                 <li class="ml-1">
                                     <div class="d-flex align-items-center">
                                         <i class="fas fa-user-edit mr-2"></i>
-                                        <a href="#"><b>ASDASDSD</b></a>
+                                        <a href="#"><b>{{ $comment->name }}</b></a>
                                     </div>
                                     <p class="ml-4 mb-0">{{ $comment->content }}</p>
                                     <div class="ml-4">

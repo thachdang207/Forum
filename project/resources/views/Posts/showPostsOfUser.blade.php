@@ -35,20 +35,19 @@
     <div class="row">
       <div class="col-12 col-md-6 offset-3 col-md-6-mt-6">
         <ul class="list-unstyled">
-          <?php $i=1;?>
           @foreach($posts as $post)
           <div class="border-bottom mt-1">
             <li class="ml-1">
               <div class="d-flex justify-content-between">
                 <a href="{{ route('posts.show',$post->id) }}" class="text-primary">
-                  <h5 class="mb-0">{{ $post->title }}</h5>
+                  <h5 class="">{{ $post->title }}</h5>
                 </a>
-                {{-- <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
+                <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
                   <input type="hidden" name="_method" value="DELETE">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <button type="submit" class="btn btn-danger">Delete</button>
-                </form> --}}
-                @if(isset($_SESSION['uid']))
+                </form>
+                {{-- @if(isset($_SESSION['uid']))
                                         @if($_SESSION['uid'=='adminm'])
                                         <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
                 <input type="hidden" name="_method" value="DELETE">
@@ -56,12 +55,8 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
                 @endif
-                @endif
+                @endif --}}
               </div>
-              <span class="badge mt-2
-                  @if($i%3==1) badge-secondary
-                  @endif
-                ">{{ $post->category_id->name }}</span>
               <p class="text-muted">{{ $post->description }}</p>
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center">
@@ -82,7 +77,7 @@
       </div>
   </div>
   </div>
-  <div class="container">
+  {{-- <div class="container">
     <div class="row">
       <div class="col-12 col-md-6 offset-3 mb-5">
         <form action="{{ route('posts.create') }}" method="GET">
@@ -90,6 +85,6 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> --}}
 </body>
 </html>
