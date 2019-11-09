@@ -34,6 +34,7 @@ class PostController extends Controller
             $result->count_comment=$count_comment;
             $result->category_id=$category_result;
         }
+        $categories=Category::Get();
         return view('posts/index',['posts'=>$results]);
     }
 

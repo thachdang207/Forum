@@ -31,12 +31,10 @@
       </div>
     </div>
   </div>
-  {{-- test --}}
-
-  {{-- endtest --}}
   <div class="container mt-5 ">
     <div class="row">
       <div class="col-12 col-md-6 offset-3 col-md-6-mt-6">
+          <h1>{{ $posts[0]->name }}</h1>
         <ul class="list-unstyled">
           <?php $i=1;?>
           @foreach($posts as $post)
@@ -61,16 +59,12 @@
                 @endif
                 @endif
               </div>
-              <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary
-                  {{-- @if($i%3==1) badge-secondary
-                  @endif --}}
-                ">{{ $post->category_id->name }}</a>
               <p class="text-muted">{{ $post->description }}</p>
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-user mr-2"></i>
                     <a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
-                      {{ $post->name }}
+                      {{ $post->user_id->name }}
                     </a>
                   </div>
                   <div class="d-flex align-items-center">
