@@ -15,13 +15,15 @@ body {
 
 .container-content .post-row .col-2 .avatar {
   width: 100%;
-  height: 80px;
-  background-color: red;
+  height: 100px;
+  background-image: url("../img/no_avatar_male_hd.png");
+  background-position: center center;
+  background-size: cover;
   margin: 10px 0;
 }
 
 .container-content .post-row .col-2 h5 {
-  margin: 10px 0;
+  margin: 15px 0;
   color: #1fa67a;
 }
 

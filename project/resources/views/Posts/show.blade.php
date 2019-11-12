@@ -3,7 +3,7 @@
     <!--Phong-->
     <div class="container container-content">
         <div class="row post-row">
-            <div class="col-2">
+            <div class="col-2 d-flex align-items-center">
                     <div class="avatar"></div>
             </div>
             <div class="col-2 d-flex ">
