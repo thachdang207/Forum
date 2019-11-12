@@ -20,22 +20,21 @@ class PostController extends Controller
         // ->select('users.name', 'posts.*')
         // ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
         // ->get();
-        $results=User::join('posts', 'users.id', '=', 'posts.user_id')
+        $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*','user_id as count_comment')
-        ->getQuery()
-        ->get();
-        foreach($results as $result) {
+        ->getQuery()->paginate(3);
+        foreach($posts as $post) {
             $count_comment=0;
-            $post_id=$result->id;
-            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$result->id)->count();
+            $post_id=$post->id;
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->count();
 
-            $category_result=Category::Where('id','=',$result->category_id)->first();
+            $category_post=Category::Where('id','=',$post->category_id)->first();
 
-            $result->count_comment=$count_comment;
-            $result->category_id=$category_result;
+            $post->count_comment=$count_comment;
+            $post->category_id=$category_post;
         }
         $categories=Category::Get();
-        return view('posts/index',['posts'=>$results]);
+        return view('posts.index',compact('posts'));
     }
 
     /**
