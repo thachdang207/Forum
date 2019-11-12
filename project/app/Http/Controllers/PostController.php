@@ -114,12 +114,14 @@ class PostController extends Controller
         ->select('users.name', 'posts.*')->where('posts.category_id','=',$post->category_id)->where('posts.id','!=',$post->id)
         ->getQuery()
         ->get();
-        $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.content','users.name')
+        $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.id','comments.content','users.name')
         ->getQuery()
+        ->orderBy('comments.id', 'desc')
         ->get();
         // dd($comments_result);
         return view('posts/show',['post'=>$post_result,'user'=>$user_result,'category'=>$category_result,'posts'=>$posts_result,'comments'=>$comments_result]);
     }
+
     public function showPostsOfUser($id){
         $postsOfUser=User::join('posts', 'users.id', '=', 'posts.user_id')->where('posts.user_id','=',$id)
         ->select('users.name', 'posts.*','user_id as count_comment')

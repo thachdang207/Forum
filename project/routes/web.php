@@ -22,3 +22,4 @@ Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
 
+

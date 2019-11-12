@@ -1,0 +1,121 @@
+body {
+  margin: 40px 100px;
+  background-color: #e0e0e0;
+}
+
+.container-content {
+  border-top: 3px solid black;
+}
+
+.container-content .post-row {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.container-content .post-row .col-2 .avatar {
+  width: 100%;
+  height: 80px;
+  background-color: red;
+  margin: 10px 0;
+}
+
+.container-content .post-row .col-2 h5 {
+  margin: 10px 0;
+  color: #1fa67a;
+}
+
+.container-content .post-row .col-3 p {
+  margin: 10px 0;
+}
+
+.container-content .post-title {
+  margin-top: 10px;
+  border: none;
+  border-bottom: 1px solid #1fa67a;
+}
+
+.container-content .post-title .col-12 {
+  padding: 0;
+}
+
+.container-content .post-title .col-12 .title {
+  color: #1fa67a;
+  font-weight: normal;
+}
+
+.container-content .post-content {
+  margin-top: 20px;
+  padding: 30px 0px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.container-comment .row .col-12 {
+  padding: 0;
+}
+
+.container-comment .row .col-12 h5 {
+  padding-top: 20px;
+  border-top: 3px solid black;
+  color: #1fa67a;
+}
+
+.container-comment .row-list-comment {
+  padding: 10px 0px;
+  background-color: transparent;
+  border-top: #444343 solid 1px;
+}
+
+.container-comment .row-list-comment .col-8 p {
+  color: #1fa67a;
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+.container-comment .row-list-comment .col-8 .content {
+  margin-left: 20px;
+}
+
+.container-comment .row-list-comment .col-8 .items {
+  margin-left: 20px;
+}
+
+.container-comment .row-list-comment .col-8 .items a {
+  color: #1fa67a;
+  text-decoration: none;
+}
+
+.container-comment .row-list-comment .col-8 .items a .far {
+  color: #1fa67a;
+}
+
+.container-comment .row-list-comment .col-8 .items a:hover {
+  color: #ac5353;
+}
+
+.container-comment .row-comment {
+  border-top: 3px solid black;
+  padding: 10px;
+}
+
+.container-comment .row-comment .col-12 form {
+  margin-top: 18px;
+}
+
+.container-comment .row-comment .col-12 form button {
+  background-color: #1fa67a;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+}
+
+.container-comment .row-comment .col-12 form button:hover {
+  color: #1fa67a;
+  background-color: white;
+}
+/*# sourceMappingURL=style-post.css.map */
