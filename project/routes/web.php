@@ -22,10 +22,6 @@ Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
 
-
-// Route::Auth('/login','LoginController@login')->name('login');
-Auth::routes();
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

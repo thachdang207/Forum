@@ -2,21 +2,29 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    protected $fillable=["name","email","password","role_id"];
-    public function posts(){
+    protected $fillable = ["name", "email", "password", "role_id"];
+
+    public function posts()
+    {
         return $this->hasMany('App\Post');
     }
-    public function reports(){
+
+    public function reports()
+    {
         return $this->hasMany('App\Post');
     }
-    public function role(){
+
+    public function role()
+    {
         return $this->beLongto('App\Role');
     }
-    public function comments(){
+
+    public function comments()
+    {
         return $this->hasMany('App\Comment');
     }
 }

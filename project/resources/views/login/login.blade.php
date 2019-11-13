@@ -23,12 +23,12 @@
                     </div><!--.signup-tab-content-->
         
                     <div id="login-tab-content">
-                        <form class="login-form" action="" method="post">
-                            <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Email or Username">
-                            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-                            <input type="checkbox" class="checkbox" id="remember_me">
+                        <form class="login-form" action="{{ route('login') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Email or Username" name="email">
+                            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name="password">
+                            <input type="checkbox" class="checkbox" id="remember_me" name="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label for="remember_me">Remember me</label>
-        
                             <input type="submit" class="button" value="Login">
                         </form><!--.login-form-->
                         <div class="help-text">
