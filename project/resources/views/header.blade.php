@@ -58,9 +58,27 @@
                         <li>
                             <a class="" href="#"><i class="fas fa-search mr-1"></i>Search</a>
                         </li>
-                        <li>
-                            <a class="" href="#"><i class="fas fa-sign-in-alt"></i>Login</a>
-                        </li>
+                        @if(Auth::check())
+                            @if (Auth::user()->isAdmin())
+                            <li>
+                                <a class="" href="#">Hi Admin:{{Auth::user()->name}}</a>
+                            </li>
+                            <li>
+                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Login</a>
+                            </li>
+                            @endif
+                            <li>
+                                <a class="" href="#">Hi User:{{Auth::user()->name}}</a>
+                            </li>
+                            <li>
+                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
+                            </li>
+                        @endif
+                        @if(!Auth::check())
+                            <li>
+                                <a class="" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-9 d-flex justify-content-end align-items-center">

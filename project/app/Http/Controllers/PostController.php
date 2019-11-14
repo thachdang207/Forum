@@ -27,9 +27,7 @@ class PostController extends Controller
             $count_comment=0;
             $post_id=$post->id;
             $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->count();
-
             $category_post=Category::Where('id','=',$post->category_id)->first();
-
             $post->count_comment=$count_comment;
             $post->category_id=$category_post;
         }

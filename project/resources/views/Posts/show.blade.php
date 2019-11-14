@@ -1,4 +1,3 @@
-
 @include('header')
     <!--Phong-->
     <div class="container container-content">
@@ -52,7 +51,7 @@
                     </div>
                     {{----}}
                         <input type="hidden" class="form-control" name="post_id"  value={{$post->id}} >
-                        <input type="hidden" class="form-control" name="user_id"  value={{$user->id}} >
+                        <input type="hidden" class="form-control" name="user_id"  value={{Auth::user()->id}} >
                     <button type="submit" class="" name="add">Add</button>
                 </form>
             </div>

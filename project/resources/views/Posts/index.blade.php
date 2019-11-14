@@ -19,9 +19,7 @@
         </div>
         <div class="col-9 ">
             <h6 class="title"> <a href="{{route('posts.show',$post->id) }}">{{ $post->title }}</a> </h6>
-            
             <p>{{ $post->description }}</p>  
-            
             <small>  Category: <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>        
             <br>
             <small><i class="far fa-comments">&nbsp</i> {{ $post->count_comment }}</small>
@@ -33,6 +31,9 @@
         </div>
     </div>
   @endforeach
+  <div class="container">
+    {{$posts->links("pagination::bootstrap-4")}}
+  </div>
 </div>
 
 <div class="container container-category">
@@ -55,7 +56,7 @@
               <p>{{ $post->description }}</p>  
               <small><i class="far fa-comments">&nbsp</i>{{ $post->count_comment }}</small>
               <small> Category: <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>        
-          </div>
+          </div>  
           <div class="col-2 ">
               <h6>Last post</h6>
               <smal>By</smal> <span class="admin">phong</span>
@@ -86,7 +87,6 @@
     </div>
   </div>
   {{-- test --}}
-
   {{-- endtest --}}
   <!--
   <div class="container mt-5 ">
@@ -102,20 +102,6 @@
                   <h5 class="mb-0">{{ $post->title }}</h5>
                 </a>
                 {{-- <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
-<<<<<<< HEAD
-                  <input type="hidden" name="_method" value="DELETE">
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form> --}}
-                @if(isset($_SESSION['uid']))
-                    @if($_SESSION['uid'=='adminm'])
-                      <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
-                    @endif
-=======
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -128,7 +114,6 @@
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
                 @endif
->>>>>>> master
                 @endif
               </div>
               <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary
@@ -170,10 +155,5 @@
     </div>
   </div>
 </body>
-<<<<<<< HEAD
-</html> -->
-@include('footer');
-=======
 
 </html>
->>>>>>> master
