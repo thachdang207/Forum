@@ -9,9 +9,9 @@
                 <h5>{{ $user->name }}</h5>
             </div>     
             <div class="col-3 offset-5 d-flex  flex-column align-items-end ">
-                <p>Join at: {{--$user->create_at--}}</p>
-                <small>time</small>
-                <small>Post</small>
+                <p>Post at: {{ $post->created_at}}</p>
+                {{--  <small>time</small>
+                <small>Post</small>  --}}
             </div>      
             </div>
         <div class="row post-title">

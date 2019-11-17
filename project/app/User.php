@@ -38,4 +38,14 @@ class User extends Authenticatable
             }
         }
     }
+    public function isUser()
+    {
+        foreach ($this->role()->get() as $role)
+        {
+            if ($role->name == 'user')
+            {
+                return true;
+            }
+        }
+    }
 }

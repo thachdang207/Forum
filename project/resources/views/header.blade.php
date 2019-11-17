@@ -64,15 +64,17 @@
                                 <a class="" href="#">Hi Admin:{{Auth::user()->name}}</a>
                             </li>
                             <li>
-                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Login</a>
+                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
                             </li>
                             @endif
+                            @if (Auth::user()->isUser())
                             <li>
                                 <a class="" href="#">Hi User:{{Auth::user()->name}}</a>
                             </li>
                             <li>
                                 <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
                             </li>
+                            @endif
                         @endif
                         @if(!Auth::check())
                             <li>

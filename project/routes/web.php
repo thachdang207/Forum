@@ -15,6 +15,7 @@ Route::get('/', function () {
     return redirect(route("posts.index"));
 });
 Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
+Route::get('/reportsOfPost/{id}','PostController@showReportsOfPost')->name('posts.showReportsOfPost');
 Route::resource('posts', 'PostController');
 Route::resource('categories', 'CategoryController');
 Route::resource('users', 'UserController');
