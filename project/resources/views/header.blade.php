@@ -60,29 +60,40 @@
                         </li>
                         @if(Auth::check())
                             @if (Auth::user()->isAdmin())
-                            <li>
-                                <a class="" href="#">Hi Admin:{{Auth::user()->name}}</a>
-                            </li>
-                            <li>
-                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
-                            </li>
+                                <li>
+                                    <a class="" href="#">Hi Admin:{{Auth::user()->name}}</a>
+                                </li>
+                                <li>
+                                    <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
+                                </li>
                             @endif
                             @if (Auth::user()->isUser())
-                            <li>
-                                <a class="" href="#">Hi User:{{Auth::user()->name}}</a>
-                            </li>
-                            <li>
-                                <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
-                            </li>
+                                <li>
+                                    <a class="" href="#">Hi User:{{Auth::user()->name}}</a>
+                                </li>
+                                <li>
+                                    <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
+                                </li>
                             @endif
                         @endif
+
                         @if(!Auth::check())
-                            <li>
-                                <a class="" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
-                            </li>
-                            <li>
-                                <a class="" href="/register"><i class="fas fa-sign-in-alt"></i>Register</a>
-                            </li>
+                            @if(Route::current()->getName()=='login')
+                                <li>
+                                    <a class="" href="/register"><i class="fas fa-sign-in-alt"></i>Register</a>
+                                </li>
+                            @elseif(Route::current()->getName()=='register')
+                                <li>
+                                    <a class="" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a class="" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
+                                </li>
+                                <li>
+                                    <a class="" href="/register"><i class="fas fa-sign-in-alt"></i>Register</a>
+                                </li>
+                            @endif
                         @endif
                     </ul>
                 </div>
