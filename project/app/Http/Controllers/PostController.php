@@ -21,15 +21,18 @@ class PostController extends Controller
         // ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
         // ->get();
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
-        ->select('users.name', 'posts.*','user_id as count_comment')
-        ->getQuery()->paginate(3);
+        ->select('users.name', 'posts.*')->selectSub(function ($query) {
+            $query->selectRaw('0');
+        }, 'count_report')
+        ->getQuery()->get();//->paginate(3);
         foreach($posts as $post) {
             $count_comment=0;
+            $count_report=0;
             $post_id=$post->id;
-            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->count();
-
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->get()->count();
+            $count_report=Post::Join('reports','posts.id','=','reports.post_id')->Where('reports.post_id','=',$post->id)->get()->count();
             $category_post=Category::Where('id','=',$post->category_id)->first();
-
+            $post->count_report=$count_report;
             $post->count_comment=$count_comment;
             $post->category_id=$category_post;
         }
@@ -144,6 +147,19 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+    }
+    public function showReportsOfPost($id){
+        $reportsOfPost=Post::join('reports', 'posts.id', '=', 'reports.post_id')->where('reports.post_id','=',$id)
+        ->join('users', 'posts.user_id', '=', 'users.id')
+        ->select('posts.*','reports.content','users.name','reports.user_id')
+        ->getQuery()
+        ->get();
+        foreach($reportsOfPost as $reportOfPost) {
+            $name='';
+            $name=User::Where('users.id','=',$reportOfPost->user_id)->first();
+            $reportOfPost->user_id=$name;
+        }
+        return view('posts/showReportsOfPost',['reportsOfPost'=>$reportsOfPost]);
     }
 
     /**
