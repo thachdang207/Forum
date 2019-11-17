@@ -78,6 +78,9 @@
                             <li>
                                 <a class="" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
                             </li>
+                            <li>
+                                <a class="" href="/register"><i class="fas fa-sign-in-alt"></i>Register</a>
+                            </li>
                         @endif
                     </ul>
                 </div>

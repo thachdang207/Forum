@@ -32,7 +32,7 @@
         @foreach($comments as $comment)
             <div class="row row-list-comment my-2">
                 <div class="col-8">
-                    <p><i class="fas fa-user mr-2"></i>{{ $user->name }}</p>
+                    <p><i class="fas fa-user mr-2"></i>{{ $comment->name}}</p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1">
                         <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
@@ -51,7 +51,9 @@
                     </div>
                     {{----}}
                         <input type="hidden" class="form-control" name="post_id"  value={{$post->id}} >
-                        <input type="hidden" class="form-control" name="user_id"  value={{Auth::user()->id}} >
+                        @if(Auth::check())
+                            <input type="hidden" class="form-control" name="user_id"  value={{Auth::user()->id}} >
+                        @endif
                     <button type="submit" class="" name="add">Add</button>
                 </form>
             </div>

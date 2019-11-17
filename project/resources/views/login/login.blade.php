@@ -4,9 +4,7 @@
         <div class="form-wrap">
                 <div class="tabs">
                     <h3 class="login-tab"><a class="active" href="#login-tab-content">Login</a></h3>
-                    <h3 class="signup-tab"><a href="#signup-tab-content">Sign Up</a></h3>
                 </div><!--.tabs-->
-        
                 <div class="tabs-content">
                     <div id="login-tab-content"  class="active">
                         <form class="login-form" action="{{ route('login') }}" method="post">
@@ -25,7 +23,7 @@
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
+                                @endif 
                             </div>
                             <input type="checkbox" class="checkbox" id="remember_me" name="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label for="remember_me">Remember me</label>
@@ -35,22 +33,6 @@
                             <p><a href="#">Forget your password?</a></p>
                         </div><!--.help-text-->
                     </div><!--.login-tab-content-->
-
-                    <div id="signup-tab-content">
-                        <form class="signup-form" action="{{ route('register') }}" method="POST">
-                        {{ csrf_field() }}
-                            <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Name" name="name" value="{{ old('name') }}" require autofocus>
-                            <input type="email" class="input" id="user_email" autocomplete="off" placeholder="Email" name="email" required>
-                            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name="password" required>
-                            <input type="password" class="input" id="user_pass_confirm" required autocomplete="off" name="password_confirmation"  placeholder="Confirm Password">
-                            <button type="submit" class="button">Sign Up</button>
-                        </form><!--.login-form-->
-                        <div class="help-text">
-                            <p>By signing up, you agree to our</p>
-                            <p><a href="#">Terms of service</a></p>
-                        </div><!--.help-text-->
-                    </div><!--.signup-tab-content-->
-                   
                 </div><!--.tabs-content-->
             </div><!--.form-wrap-->
 
