@@ -25,7 +25,7 @@
                                     </span>
                                 @endif 
                             </div>
-                            <input type="checkbox" class="checkbox" id="remember_me" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <input type="checkbox" class="checkbox" id="remember_me" name="remember"  {{ old('remember') ? 'checked' : '' }}>
                             <label for="remember_me">Remember me</label>
                             <input type="submit" class="button" value="Login">
                         </form><!--.login-form-->
