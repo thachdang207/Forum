@@ -19,7 +19,10 @@ class PostsTableSeeder extends Seeder
         for ($i = 0 ; $i<10; $i++) {
             Post::insert(['title'=>$faker->sentence(random_int(3,5)),'description'=> $faker->sentence(6),
             'content'=>$faker->sentence(15), 'category_id'=>array_random($arrayCategory_id),
-                'user_id'=>array_random($arrayUser_id)]);
+                'user_id'=>array_random($arrayUser_id),
+                'created_at'=>now(),
+                'updated_at'=>now()]);
+                
         }
     }
 }
