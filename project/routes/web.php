@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
 Route::resource('posts', 'PostController');
 Route::resource('categories', 'CategoryController');
 Route::resource('users', 'UserController');

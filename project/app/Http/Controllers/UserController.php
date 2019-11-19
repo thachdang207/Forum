@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
+use App\Post;
+use App\Category;
 class UserController extends Controller
 {
     /**
@@ -44,9 +45,21 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $postsOfUser=User::join('posts', 'users.id', '=', 'posts.user_id')->where('posts.user_id','=',$id)
+        ->select('users.name', 'posts.*')
+        ->getQuery()
+        ->get();
+        foreach($postsOfUser as $postOfUser) {
+            $count_comment=0;
+            $post_id=$postOfUser->id;
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$postOfUser->id)->count();
+            $categoryOfPost=Category::Where('id','=',$postOfUser->category_id)->first();
+            $postOfUser->category=$categoryOfPost;
+            $postOfUser->count_comment=$count_comment;
+        }
+        return view('posts/showPostsOfUser',['posts'=>$postsOfUser]);
     }
 
     /**

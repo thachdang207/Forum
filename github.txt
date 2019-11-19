@@ -1,0 +1,5 @@
+git checkout thach //chuyen nhanh
+git fetch origin phong//ktra tren nhanh phong co gi thay doi
+git branch -v//ktra tren may co nhung~ nhanh' nao
+git merge phong//dang o master,va gop phong vao master
+xong push len thoi

@@ -46,7 +46,20 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $postsOfCategory=Category::Join('posts','categories.id','=','posts.category_id')->where('posts.category_id','=',$category->id)
+        ->select('categories.name','posts.*')
+        ->getQuery()->get();
+        foreach($postsOfCategory as $postOfCategory) {
+            $count_comment=0;
+            $post_id=$postOfCategory->id;
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$postOfCategory->id)->count();
+
+            $user_result=User::Where('id','=',$postOfCategory->user_id)->first();
+
+            $postOfCategory->count_comment=$count_comment;
+            $postOfCategory->userName=$user_result;
+        }
+        return view('categories/show',['posts'=>$postsOfCategory]);
     }
 
     /**

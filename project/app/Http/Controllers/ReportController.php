@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Report;
 use Illuminate\Http\Request;
-
+use App\Post;
+use App\User;
 class ReportController extends Controller
 {
     /**
@@ -35,7 +36,13 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $report = Post::findOrFail($request->post_id);
+        Report::create([
+            'content' => $request->content,
+            'user_id' => 1,/////
+            'post_id' => $report->id
+        ]);
+        return redirect()->route('posts.show', $report->id);
     }
 
     /**
@@ -44,9 +51,19 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show(Report $report)
+    public function show($id)
     {
-        //
+        $reportsOfPost=Post::join('reports', 'posts.id', '=', 'reports.post_id')->where('reports.post_id','=',$id)
+        ->join('users', 'posts.user_id', '=', 'users.id')
+        ->select('posts.*','reports.content','users.name','reports.user_id')
+        ->getQuery()
+        ->get();
+        foreach($reportsOfPost as $reportOfPost) {
+            $name='';
+            $name=User::Where('users.id','=',$reportOfPost->user_id)->first();
+            $reportOfPost->user_id=$name;
+        }
+        return view('posts/showReportsOfPost',['reportsOfPost'=>$reportsOfPost]);
     }
 
     /**
