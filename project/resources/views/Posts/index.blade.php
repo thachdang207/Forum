@@ -28,7 +28,10 @@
         </div>
         <div class="col-2 ">
           <h6>Last post</h6>
-          <smal>By</smal> <span class="admin">{{$post->name}}</span>
+          <smal>By</smal> <span class="admin"><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
+              {{ $post->name }}
+            </a></span>
+          
           <p>Time....</p>
         </div>
     </div>
@@ -58,14 +61,23 @@
           </div>
           <div class="col-2 ">
               <h6>Last post</h6>
-              <smal>By</smal> <span class="admin">phong</span>
+              <small>By</small> <span class="admin"><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
+                  {{ $post->name }}
+                </a></span>
               <p>Time.....</p>
           </div>
       </div>
-      
-        
+          
   </div>
-
+  <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-3 mb-5">
+          <form action="{{ route('posts.create') }}" method="GET">
+            <button type="submit" class="otherButton">Add post</button>
+          </form>
+        </div>
+      </div>
+    </div>
   <!--Phong-->
 
 {{-- <body>

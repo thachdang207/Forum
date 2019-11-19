@@ -22,7 +22,7 @@ class PostController extends Controller
         // ->get();
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*','user_id as count_comment')
-        ->getQuery()->paginate(3);
+        ->getQuery()->paginate(7);
         foreach($posts as $post) {
             $count_comment=0;
             $post_id=$post->id;
@@ -105,20 +105,31 @@ class PostController extends Controller
     {
         $user_id=$post->user_id;
         $post_id=$post->id;
-        $category_result=Category::Where('id','=',$post->category_id)->first();
+
+        $category_result=Category::Where('id','=',
+        $post->category_id)->first();
 
         $post_result = Post::Where('id','=',$post_id)->first();
+        
         $user_result=User::Where('id','=',$post->user_id)->first();
+        
         $posts_result = User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*')->where('posts.category_id','=',$post->category_id)->where('posts.id','!=',$post->id)
         ->getQuery()
         ->get();
+
         $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.id','comments.content','users.name')
         ->getQuery()
         ->orderBy('comments.id', 'desc')
         ->get();
         // dd($comments_result);
-        return view('posts/show',['post'=>$post_result,'user'=>$user_result,'category'=>$category_result,'posts'=>$posts_result,'comments'=>$comments_result]);
+        return view('posts/show',[
+        'post'=>$post_result,
+        'user'=>$user_result,
+        'category'=>$category_result,
+        'posts'=>$posts_result,
+        'comments'=>$comments_result
+        ]);
     }
 
     public function showPostsOfUser($id){
@@ -126,13 +137,23 @@ class PostController extends Controller
         ->select('users.name', 'posts.*','user_id as count_comment')
         ->getQuery()
         ->get();
+
+
+
         foreach($postsOfUser as $postOfUser) {
             $count_comment=0;
             $post_id=$postOfUser->id;
             $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$postOfUser->id)->count();
             $postOfUser->count_comment=$count_comment;
+
+            $category_post=Category::Where('id','=',$postOfUser->category_id)->first();
+            $postOfUser->category_id=$category_post;
         }
-        return view('posts/showPostsOfUser',['posts'=>$postsOfUser]);
+
+       // dd($postsOfUser);
+        return view('posts/showPostsOfUser',[
+            'posts'=>$postsOfUser,
+        ]);
     }
 
     /**
@@ -171,5 +192,33 @@ class PostController extends Controller
         // $post1->comments()->detach();
         POST::destroy($post->id);
         return redirect()->route('posts.index');
+    }
+    public function comment(Request $request, Post $post ){
+        $post = Post::findOrFail($request->post_id);
+        if(!$request->ajax()){
+            $output='';
+            $comment= new Comment;
+            $comment->content=$request->content;
+            $comment->user_id=1;
+            $comment->post_id=$request->post_id;
+            $comment->save();
+            $data=Comment::get();
+            foreach($data as $r){
+                $output.='<div class="row row-list-comment my-2">'
+                .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
+                <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
+                <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+                        <a href="#"><i class="fas fa-exclamation"></i> Report</a>
+                    </div>
+                </div>
+            </div>';
+            }
+        }   
+        $response = array(
+            'data'=>$output,
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+        );
+        return Response::json($response);
     }
 }

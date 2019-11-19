@@ -1,13 +1,17 @@
-
+w
 @include('header')
     <!--Phong-->
+    
     <div class="container container-content">
         <div class="row post-row">
             <div class="col-2 d-flex align-items-center">
                     <div class="avatar"></div>
             </div>
             <div class="col-2 d-flex ">
-                <h5>{{ $user->name }}</h5>
+                <h5><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
+                        {{ $user->name }}
+                      </a>{{-- $user->name --}}</h5>
+                
             </div>     
             <div class="col-3 offset-5 d-flex  flex-column align-items-end ">
                 <p>Join at: {{--$user->create_at--}}</p>
@@ -24,6 +28,8 @@
             <div class="mx-3">{!! $post->content !!}</div>
         </div>
     </div>
+
+      {{-- comment --}}
     <div class="container container-comment mt-5">
         <div class="row">
             <div class="col-12">
@@ -33,7 +39,9 @@
         @foreach($comments as $comment)
             <div class="row row-list-comment my-2">
                 <div class="col-8">
-                    <p><i class="fas fa-user mr-2"></i>{{ $user->name }}</p>
+                    <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
+                            {{ $user->name }}
+                          </a></p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1">
                         <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
@@ -45,19 +53,29 @@
         @endforeach
         <div class="row row-comment">
             <div class="col-12">
-                <form method="POST" action="{{route('comments.store',$post->id)}}">
+                <form method="POST" action="{{--route('comments.store')--}}">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
-                        <textarea class="form-control" id="exampleInputEmail1" name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
+                        <textarea class="form-control" class="content-comment" name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
                     </div>
-                    {{----}}
-                        <input type="hidden" class="form-control" name="post_id"  value={{$post->id}} >
-                        <input type="hidden" class="form-control" name="user_id"  value={{$user->id}} >
-                    <button type="submit" class="" name="add">Add</button>
-                </form>
+                    
+                        <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
+                        <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{$user->id}} >
+                    <button type="submit" class="add add-comment" name="add-comment">Add</button>
+                </form> 
             </div>
         </div>
     </div>
+
+    {{-- <form>
+            <input type="hidden" name="_token" content="{{csrf_token()}}"> 
+           <div class="form-group">
+               <textarea class="form-control content-comment" name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
+           </div>
+               <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
+               <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{$user->id}} >
+           <button type="submit" class="add add-comment" name="add-comment">Add</button>
+       </form> --}}
 <!--end--> 
 <!--
     <div class="container mt-5">
@@ -126,7 +144,7 @@
         </div>
     </div>
 -->
-    <script>
+    {{-- <script>
         var i=0;
             $(document).ready(function()
                 {
@@ -141,10 +159,42 @@
                         }
                     });
                 });
-    </script>
+    </script> --}}
       <script>
             // Thay thế <textarea id="post_content"> với CKEditor
           //  CKEDITOR.replace( 'content' );// tham số là biến name của textarea
         </script>
+        <script src="{{asset('css/phong/jquery.js')}}"></script>
+        <script>
+            $(document).ready(function(){
+                $(".add-comment").click(function(){
+                    
+                    var content=$(".content-comment").val();
+                    var post_id=$(".post-id-comment").val();
+                    var user_id=$(".user-id-comment").val();
+                    console.log(content);
+                      $.ajaxSetup({
+                       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+                       });
+                    $.ajax({
+                        type:'POST',
+                        url:"{{route('comments.store')}}",
+                        
+                        data: {
+                             _token: '{!! csrf_token() !!}',
+                             content:content,
+                             post_id:post_id,
+                             user_id:user_id
+                         },
+                         dataType:'json',
+                        success:function(data){
+                            ("body").append(response.success);
+                            $(".container-comment").append(response.data);
+                        }
+                    });
+                    return false;
+                });
+            });
+         </script>
 </body>
 </html>

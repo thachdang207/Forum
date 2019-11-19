@@ -26,6 +26,7 @@ Route::resource('reports', 'ReportController');
 // Route::Auth('/login','LoginController@login')->name('login');
 Auth::routes();
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('posts/{$id}','PostController@comment')->name('posts.comment');
