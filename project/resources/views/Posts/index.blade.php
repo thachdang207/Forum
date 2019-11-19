@@ -1,5 +1,3 @@
-<?php session_start() ?>
-
 @include('header')
 <!--phong-->
 
@@ -28,35 +26,24 @@
       <small><i class="far fa-comments">&nbsp</i> {{ $post->count_comment }}</small>
     </div>
     <div class="col-1 flex-column justify-content-between">
-        {{--  @if(isset($_SESSION['uid']))
-        @if($_SESSION['uid'=='admin'])
-        <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
+      @if(Auth::check())
+        @if(Auth::user()->isAdmin())
+        <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="mb-5">
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
         @endif
-        @endif  --}}
-        <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="mb-5">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-        {{--  Report  --}}
-        {{--  @if(isset($_SESSION['uid']))
-        @if($_SESSION['uid'=='admin'])
-        <a href="{{ route('reports.show',$post->id) }}">
-          <i class="fas fa-exclamation-triangle"></i>
-          {{ $post->$count_report }}
-        </a>
+      @endif
+
+      @if(Auth::check())
+        @if(Auth::user()->isAdmin() && $post->count_report > 0)
+            <a href="{{ route('reports.show',$post->id) }}" class="text-danger">
+              <i class="fas fa-exclamation-triangle"></i>
+              {{ $post->count_report }}
+            </a>
         @endif
-        @endif  --}}
-        @if($post->count_report>0)
-        <a href="{{ route('posts.showReportsOfPost',$post->id) }}" class="text-danger">
-            <i class="fas fa-exclamation-triangle"></i>
-            {{ $post->count_report }}
-        </a>
-        @endif
+      @endif
       </div>
     <div class="col-2 ">
       <h6>Last post</h6>

@@ -35,7 +35,8 @@ body {
         font-weight: 400;
         background-color: #e6e7e8;
         display: block;
-        color: #666; }
+        color: #666; 
+        text-align: center;}
         .form-wrap .tabs h3 a.active {
           background-color: #fff; }
   .form-wrap .tabs-content {

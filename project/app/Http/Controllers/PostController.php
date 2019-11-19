@@ -17,19 +17,6 @@ class PostController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $result = User::join('posts', 'users.id', '=', 'posts.user_id')
-            ->select('users.name', 'posts.*')
-            ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
-            ->get();
-        $count_comments = Post::join('comments', 'posts.id', '=', 'comments.post_id')
-            ->select('comments.content', 'posts.*')
-            ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
-            ->get();
-        // dd(count($count_comments));
-        $categories = Category::Get();
-        return view('posts/index', ['posts' => $result, 'categories' => $categories, 'comments' => $count_comments]);
-=======
         // $result = User::join('posts', 'users.id', '=', 'posts.user_id')
         // ->select('users.name', 'posts.*')
         // ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
@@ -52,7 +39,6 @@ class PostController extends Controller
         }
         $categories=Category::Get();
         return view('posts.index',compact('posts'));
->>>>>>> 6e9eb45272647ead8e376a8e52c0a2a2b04991f0
     }
 
     /**
@@ -120,35 +106,28 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-<<<<<<< HEAD
-        $post_id = $post->id;
-        $category_result = Category::Where('id', '=', $post->category_id)->first();
-=======
         $user_id=$post->user_id;
         $post_id=$post->id;
         $category_result=Category::Where('id','=',$post->category_id)->first();
->>>>>>> 6e9eb45272647ead8e376a8e52c0a2a2b04991f0
 
         $post_result = Post::Where('id', '=', $post_id)->first();
         $user_result = User::Where('id', '=', $post->user_id)->first();
         $posts_result = User::join('posts', 'users.id', '=', 'posts.user_id')
-<<<<<<< HEAD
-            ->select('users.name', 'posts.*')->where('posts.category_id', '=', $post->category_id)->where('posts.id', '!=', $post->id)
-            ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
-            ->get();
-        $comments_result = Comment::Where('post_id', '=', $post->id)->Get();
-        return view('posts/show', ['post' => $post_result, 'user' => $user_result, 'category' => $category_result, 'posts' => $posts_result, 'comments' => $comments_result]);
-=======
         ->select('users.name', 'posts.*')->where('posts.category_id','=',$post->category_id)->where('posts.id','!=',$post->id)
         ->getQuery()
         ->get();
-        $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.id','comments.content','users.name')
+        // $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)
+        // ->select('comments.id','comments.content','users.name')
+        // ->getQuery()
+        // ->orderBy('comments.id', 'desc')
+        // ->get();
+        $comments_result = Comment::join('users','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)
+        ->select('comments.id','comments.content','users.name')
         ->getQuery()
         ->orderBy('comments.id', 'desc')
         ->get();
-        // dd($comments_result);
+        //dd($comments_result);
         return view('posts/show',['post'=>$post_result,'user'=>$user_result,'category'=>$category_result,'posts'=>$posts_result,'comments'=>$comments_result]);
->>>>>>> 6e9eb45272647ead8e376a8e52c0a2a2b04991f0
     }
 
     public function showPostsOfUser($id){
@@ -212,13 +191,10 @@ class PostController extends Controller
         // Comment::destroy()
         // $post1 = Post::find($post->id);
         // $post1->comments()->detach();
-<<<<<<< HEAD
         $post->foreign('post_id')
             ->references('id')->on('posts')
             ->onDelete('cascade');
-=======
->>>>>>> 6e9eb45272647ead8e376a8e52c0a2a2b04991f0
-        POST::destroy($post->id);
+        // POST::destroy($post->id);
         return redirect()->route('posts.index');
     }
 }

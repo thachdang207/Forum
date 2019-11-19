@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route("posts.index"));
 });
 Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
 Route::get('/reportsOfPost/{id}','PostController@showReportsOfPost')->name('posts.showReportsOfPost');
@@ -22,15 +22,8 @@ Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
-<<<<<<< HEAD
-Auth::routes();
-=======
 
-
-// Route::Auth('/login','LoginController@login')->name('login');
-Auth::routes();
 
 Auth::routes();
 
->>>>>>> 6e9eb45272647ead8e376a8e52c0a2a2b04991f0
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
