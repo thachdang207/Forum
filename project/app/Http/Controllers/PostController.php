@@ -22,7 +22,7 @@ class PostController extends Controller
         // ->get();
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*','user_id as count_comment')
-        ->getQuery()->paginate(7);
+        ->getQuery()->paginate(3);
         foreach($posts as $post) {
             $count_comment=0;
             $post_id=$post->id;

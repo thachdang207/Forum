@@ -44,9 +44,9 @@ w
                           </a></p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1">
-                        <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
+                        {{-- <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a> --}}
                         <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                        <a href="#"><i class="fas fa-exclamation"></i> Report</a>
+                        <a href="#"><i class="fas fa-exclamation"></i> Report </a>
                     </div>
                 </div>
             </div>  
@@ -173,13 +173,12 @@ w
                     var post_id=$(".post-id-comment").val();
                     var user_id=$(".user-id-comment").val();
                     console.log(content);
-                      $.ajaxSetup({
-                       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-                       });
+                    //   $.ajaxSetup({
+                    //    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+                    //    });
                     $.ajax({
                         type:'POST',
                         url:"{{route('comments.store')}}",
-                        
                         data: {
                              _token: '{!! csrf_token() !!}',
                              content:content,

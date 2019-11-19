@@ -67,7 +67,11 @@
               <p>Time.....</p>
           </div>
       </div>
-          
+      <div class="row "style="background:#f1f2f2 ; ">
+        <div class="col-12 col-md-6 pl-0" >
+            {{$posts->links("pagination::bootstrap-4")}}
+        </div>
+      </div>
   </div>
   <div class="container">
       <div class="row">

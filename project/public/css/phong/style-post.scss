@@ -23,6 +23,13 @@ body{
             h5{
                 margin: 15px 0;
                 color:#1fa67a;
+                a{
+                    color:#1fa67a;
+                    text-decoration: none;
+                }
+                a:hover{
+                    color:rgb(172, 83, 83);
+                }
             }   
         }
         .col-3{
@@ -77,6 +84,13 @@ body{
                 margin: 0;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 font-weight: bold;
+                a{
+                    color: #1fa67a;
+                    text-decoration: none;
+                }
+                a:hover{
+                    color:rgb(172, 83, 83);
+                }
             }
             .content{
                 margin-left: 20px;
@@ -88,6 +102,9 @@ body{
                     text-decoration: none;
                     .far{
                         color:#1fa67a;
+                    }
+                    .fas{
+                        color:red;
                     }
                 }
                 a:hover{

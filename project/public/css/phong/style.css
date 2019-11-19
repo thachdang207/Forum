@@ -157,9 +157,14 @@ body {
   color: black;
 }
 
-.container-body1 .row-post .col-2 .admin {
+.container-body1 .row-post .col-2 .admin a {
+  text-decoration: none;
   color: #1fa67a;
   font-weight: bold;
+}
+
+.container-body1 .row-post .col-2 .admin a:hover {
+  color: #ac5353;
 }
 
 .container-body1 .row-post .col-2 p {
@@ -226,9 +231,14 @@ body {
   color: black;
 }
 
-.container-category .row-post .col-2 .admin {
+.container-category .row-post .col-2 .admin a {
   color: #1fa67a;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.container-category .row-post .col-2 .admin a:hover {
+  color: #ac5353;
 }
 
 .container-category .row-post .col-2 p {

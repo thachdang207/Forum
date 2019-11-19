@@ -1,119 +1,4 @@
-// .header{
-//     padding: 0;
-//     border-bottom:1px solid #68640E;
-//     //background-color: white;
-//     .row{
-//         .col-7{
-//             nav{
-//                 .logo{
-//                     margin-top:-8px;
-//                     color:black;
-//                     font-size: 30px;
-//                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//                     font-weight: bold;
-//                 }
-//                 .collapse {
-//                     ul{
-//                         .nav-item{
-//                             .nav-link{
-//                                 color:black !important;
-//                             }
-                            
-//                         }
-//                     }
-//                 }
-                
-//             }
-//         }
-//         .col-4{
-//             a{
-//                 i{
-//                     margin-left: 40px;
-//                     color:rgb(11, 101, 185);
-//                     font-size: 40px;
-//                 }
-//             }
-//         }
-//     }
-// }
-// .container-body{
-//     border:none;
-//     box-shadow: 2px 2px 10px 5px #e6ebed;
-//     .head{
-//         color:black;
-//         font-size: 18px;
-//         padding: 20px 0;
-//         font-weight: bold;
-//     }
-//     .bg-post:nth-child(even){
-//         background-color:#FEF3E1;
-//     }
-//     .bg-post:nth-child(odd){
-//         background-color:#f5f7f8 ;
-//     }
-//     .post{
-//         padding: 30px 0px;
-//         .post-title{
-//             a{
-//                 color:black;
-//                 font-size:16px;
-//                 font-weight: 400px;
-//                 text-decoration: none;      
-//             }
-//             a:hover{
-//                 color:blue;
-//             }
-//         }
-//         .post-category{
-//             a{
-//                 color:black;
-//                 font-size:16px;
-//                 font-weight: 400px;
-//                 text-decoration: none;
-//                 .bg-a{
-//                     border-radius: 50%; 
-//                     margin-right: 7px;
-//                     margin-top:5px ;
-//                     background-color: #f3400a;
-//                     width: 8px;
-//                     height: 8px;
-//                 }
-//                 p{
-//                     margin: 0px;
-//                 }
-//             }
-//             a:hover{
-//                 color:blue;
-//             }
-//         }
-//         .post-user{
-//             .far{
-//                 margin-top:3px ;
-//                 margin-right:5px;
-//                 color:red;
-//                 font-size: 18px;
-//             }
-//             p{
-//                 color:black;
-//                 font-size:16px;
-//                 font-weight: 400px;
-//             }
-//         }
-//         .post-comment{
-//             .fas{
-//                 margin-top:3px ;
-//                 margin-right:5px;
-//                 color:blue;
-//                 font-size: 16px;
-//             }
-//             p{
-//                 color:black;
-//                 font-size:16px;
-//                 font-weight: 400px;
-//             }
-//         }
-//     }
-// }
+
 body{
     background-color: #e0e0e0;
     margin: 40px 100px;
@@ -278,8 +163,14 @@ body{
                 color:black;
             }
             .admin{
-                color:#1fa67a;
-                font-weight: bold;
+                a{
+                    text-decoration: none;
+                    color:#1fa67a;
+                    font-weight: bold;
+                }
+                a:hover{
+                    color:rgb(172, 83, 83);
+                }
             }
             p{
                 margin: 0;
@@ -347,8 +238,14 @@ body{
                 color:black;
             }
             .admin{
-                color:#1fa67a;
-                font-weight: bold;
+                a{
+                    color:#1fa67a;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+                a:hover{
+                    color:rgb(172, 83, 83);
+                }
             }
             p{
                 margin: 0;
