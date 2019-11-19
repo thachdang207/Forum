@@ -16,9 +16,10 @@ class ReportsTableSeeder extends Seeder
         $faker= Faker\Factory::create();
         $arrayUser_id= User::pluck('id')->toArray();
         $arrayPost_id= Post::pluck('id')->toArray();
-        for ($i = 0 ; $i<10; $i++) {
-            Report::insert(['content'=>$faker->sentence(10), 'user_id'=>array_random($arrayUser_id),
-                'post_id'=>array_random($arrayPost_id)]);
+        for ($i = 0 ; $i < 10; $i++) {
+            Report::insert(['content'=>$faker->sentence(10), 
+            'user_id'=>array_random($arrayUser_id),
+            'post_id'=>array_random($arrayPost_id)]);
         }
     }
 }

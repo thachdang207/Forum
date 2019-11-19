@@ -46,7 +46,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        //
+        dd($report->post_id);
     }
 
     /**

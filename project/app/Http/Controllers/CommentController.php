@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Comment;
 use Illuminate\Http\Request;
-
+use App\Post;
 class CommentController extends Controller
 {
     /**
@@ -16,7 +14,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -26,18 +23,23 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
-        //
+        $post = Post::findOrFail($request->post_id);
+        Comment::create([
+            'content' => $request->content,
+            'user_id' => $request->user_id,/////
+            'post_id' => $post->id
+        ]);
+        return redirect()->route('posts.show', $post->id);
     }
-
     /**
      * Display the specified resource.
      *
@@ -48,7 +50,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -59,7 +60,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -71,7 +71,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
