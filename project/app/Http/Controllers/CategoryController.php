@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-
+use App\Post;
+use App\User;
 class CategoryController extends Controller
 {
     /**

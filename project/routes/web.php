@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route("posts.index"));
 });
 Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
 Route::resource('posts', 'PostController');
@@ -21,3 +21,8 @@ Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
+
+
+Auth::routes();
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

@@ -19,7 +19,8 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->sentence(3),
                 'email' => $faker->email,
                 'password' => $faker->password,
-                'role_id' => array_random($arrayRole_id)
+                'role_id' => array_random($arrayRole_id),
+                'remember_token'=> $faker->sentence(3)
                 ]);
         }
     }

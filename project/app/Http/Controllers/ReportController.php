@@ -31,7 +31,7 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,11 +48,12 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Report  $report
+     * @param \App\Report $report
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
+<<<<<<< HEAD
         $reportsOfPost=Post::join('reports', 'posts.id', '=', 'reports.post_id')->where('reports.post_id','=',$id)
         ->join('users', 'posts.user_id', '=', 'users.id')
         ->select('posts.*','reports.content','users.name','reports.user_id')
@@ -64,12 +65,15 @@ class ReportController extends Controller
             $reportOfPost->user_id=$name;
         }
         return view('posts/showReportsOfPost',['reportsOfPost'=>$reportsOfPost]);
+=======
+        dd($report->post_id);
+>>>>>>> da1f46e50742836c18b46cc17aaf68534a29977a
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Report  $report
+     * @param \App\Report $report
      * @return \Illuminate\Http\Response
      */
     public function edit(Report $report)
@@ -80,8 +84,8 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Report $report
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Report $report)
@@ -92,7 +96,7 @@ class ReportController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Report  $report
+     * @param \App\Report $report
      * @return \Illuminate\Http\Response
      */
     public function destroy(Report $report)
