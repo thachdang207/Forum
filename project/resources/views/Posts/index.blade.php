@@ -1,88 +1,98 @@
-<?php session_start() ?>
-
 @include('header')
 <!--phong-->
 
 <div class="container container-body1">
   <div class="row">
-      <div class="col-10 d-flex align-items-center">
-          <p >Forum</p>          
-      </div>
-      <div class="col-2 d-flex align-items-center">
-          <p>Last post</p>
-      </div>
+    <div class="col-10 d-flex align-items-center">
+      <p>Forum</p>
+    </div>
+    <div class="col-2 d-flex align-items-center">
+      <p>Last post</p>
+    </div>
   </div>
   @foreach($posts as $post)
-    <div class="row row-post">
-        <div class="col-1 d-flex align-items-center">
-            <div class="avatar"></div>
-        </div>
-        <div class="col-9 ">
-            <h6 class="title"> <a href="{{route('posts.show',$post->id) }}">{{ $post->title }}</a> </h6>
-            
-            <p>{{ $post->description }}</p>  
-            
-            <small>  Category: <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>        
-            <br>
-            <small><i class="far fa-comments">&nbsp</i> {{ $post->count_comment }}</small>
-        </div>
-        <div class="col-2 ">
-          <h6>Last post</h6>
-          <smal>By</smal> <span class="admin"><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
-              {{ $post->name }}
-            </a></span>
-          
-          <p>Time....</p>
-        </div>
+  <div class="row row-post">
+    <div class="col-1 d-flex align-items-center">
+      <div class="avatar"></div>
     </div>
+    <div class=" col-8 ">
+      <h6 class="title"> <a href="{{route('posts.show',$post->id) }}">{{ $post->title }}</a> </h6>
+      <p>{{ $post->description }}</p>
+      <small> Category: <a href="{{ route('categories.show',$post->category_id) }}"
+          class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>
+      <br>
+      <small><i class="far fa-comments">&nbsp</i> {{ $post->count_comment }}</small>
+    </div>
+    <div class="col-1 flex-column justify-content-between">
+      @if(Auth::check())
+        @if(Auth::user()->isAdmin())
+        <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="mb-5">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        @endif
+      @endif
+
+      @if(Auth::check())
+        @if(Auth::user()->isAdmin() && $post->count_report > 0)
+            <a href="{{ route('reports.show',$post->id) }}" class="text-danger">
+              <i class="fas fa-exclamation-triangle"></i>
+              {{ $post->count_report }}
+            </a>
+        @endif
+      @endif
+      </div>
+    <div class="col-2 ">
+      <h6>Last post</h6>
+    <small>By</small>a <span class="admin"><a href="{{route('posts.showPostsOfUser',$post->user_id)}}">{{$post->name}}</a></span>
+      <p>Time....</p>
+    </div>
+  </div>
   @endforeach
 </div>
 
 <div class="container container-category">
-      <div class="row">
-          <div class="col-10 d-flex align-items-center">
-              <p><a href="#"> Category: </a></p>          
-          </div>
-          <div class="col-2 d-flex align-items-center">
-              <p>Last post</p>
-          </div>
-      </div>
-    
-      <div class="row row-post">
-          <div class="col-1 d-flex align-items-center">
-              <div class="avatar"></div>
-          </div>
-          <div class="col-9 ">
-              <h6 class="title"> <a href="{{route('posts.show',$post->id) }}">{{ $post->title }}</a> </h6>
-              
-              <p>{{ $post->description }}</p>  
-              <small><i class="far fa-comments">&nbsp</i>{{ $post->count_comment }}</small>
-              <small> Category: <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>        
-          </div>
-          <div class="col-2 ">
-              <h6>Last post</h6>
-              <small>By</small> <span class="admin"><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
-                  {{ $post->name }}
-                </a></span>
-              <p>Time.....</p>
-          </div>
-      </div>
-      <div class="row "style="background:#f1f2f2 ; ">
-        <div class="col-12 col-md-6 pl-0" >
-            {{$posts->links("pagination::bootstrap-4")}}
-        </div>
-      </div>
-  </div>
-  <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-6 offset-3 mb-5">
-          <form action="{{ route('posts.create') }}" method="GET">
-            <button type="submit" class="otherButton">Add post</button>
-          </form>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col-10 d-flex align-items-center">
+      <p><a href="#"> Category: </a></p>
     </div>
-  <!--Phong-->
+    <div class="col-2 d-flex align-items-center">
+      <p>Last post</p>
+    </div>
+  </div>
+
+  <div class="row row-post">
+    <div class="col-1 d-flex align-items-center">
+      <div class="avatar"></div>
+    </div>
+    <div class="col-9">
+      <h6 class="title"> <a href="{{route('posts.show',$post->id) }}">{{ $post->title }}</a> </h6>
+
+      <p>{{ $post->description }}</p>
+      <small><i class="far fa-comments">&nbsp</i>{{ $post->count_comment }}</small>
+      <small> Category: <a href="{{ route('categories.show',$post->category_id) }}"
+          class="badge mt-2 badge-secondary">{{ $post->category_id->name }}</a></small>
+    </div>
+    <div class="col-2 ">
+      <h6>Last post</h6>
+      <small>By</small> <span class="admin">phong</span>
+      <p>Time.....</p>
+    </div>
+  </div>
+
+</div>
+{{--  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 offset-3 mb-5">
+        <form action="{{ route('posts.create') }}" method="GET">
+<button type="submit" class="otherButton">Add post</button>
+</form>
+</div>
+</div>
+</div> --}}
+
+<!--Phong-->
 
 {{-- <body>
   <div class="container-fluid mb-5">
@@ -103,8 +113,8 @@
   </div>
   {{-- test --}}
 
-  {{-- endtest --}}
-  <!--
+{{-- endtest --}}
+<!--
   <div class="container mt-5 ">
     <div class="row">
       <div class="col-12 col-md-6 offset-3 col-md-6-mt-6">
@@ -118,18 +128,18 @@
                   <h5 class="mb-0">{{ $post->title }}</h5>
                 </a>
                 {{-- <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-danger">Delete</button>
-                </form> --}}
-                @if(isset($_SESSION['uid']))
-                @if($_SESSION['uid'=='adminm'])
-                <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
                   <input type="hidden" name="_method" value="DELETE">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-                @endif
+                </form> --}}
+                @if(isset($_SESSION['uid']))
+                    @if($_SESSION['uid'=='adminm'])
+                      <form action="{{ route('posts.destroy',$post->id) }}" method="POST" class="">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
+                    @endif
                 @endif
               </div>
               <a href="{{ route('categories.show',$post->category_id) }}" class="badge mt-2 badge-secondary
@@ -157,7 +167,7 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-6 offset-3">
-          {{$posts->links("pagination::bootstrap-4")}}
+          {{--  {{ $posts->links("pagination::bootstrap-4")}}  --}}
       </div>
     </div>
   </div>

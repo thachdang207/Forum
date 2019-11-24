@@ -12,21 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route("posts.index"));
 });
 Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
+Route::get('/reportsOfPost/{id}','PostController@showReportsOfPost')->name('posts.showReportsOfPost');
 Route::resource('posts', 'PostController');
 Route::resource('categories', 'CategoryController');
 Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 Route::resource('comments', 'CommentController');
 Route::resource('reports', 'ReportController');
-
-
-// Route::Auth('/login','LoginController@login')->name('login');
 Auth::routes();
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::post('posts/{$id}','PostController@comment')->name('posts.comment');
+route::post('comments/add','CommentController@addcomment');
+
+route::post('test','CommentController@addcomment');

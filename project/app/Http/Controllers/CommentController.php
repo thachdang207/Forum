@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Comment;
 use Illuminate\Http\Request;
 use App\Post;
-
 class CommentController extends Controller
 {
     /**
@@ -13,11 +10,66 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function addcomment(Request $request){
+
+        $post = Post::findOrFail($request->post_id);
+        if(!$request->ajax()){
+            $output='';
+            $comment= new Comment;
+            $comment->content=$request->content;
+            $comment->user_id=$request->user_id;
+            $comment->post_id=$request->post_id;
+            $comment->save();
+        }   
+        $rs = array(
+            //'data'=>$output,
+            'msg' => 'Setting created successfully',
+        );         
+        return response()->json($rs);
+    }
     public function index()
     {
-        //
+        $post = Post::findOrFail($request->post_id);
+        // //$user = Auth::user();
+        // Comment::create([
+        //     'content' => $request->content,
+        //     'user_id' => 1,/////
+        //     'post_id' => $post->id
+        // ]);
+        // return redirect()->route('posts.show',$post->id);
+            //dd($request->ajax());
+        if(!$request->ajax()){
+            $output='';
+            $comment= new Comment;
+            $comment->content=$request->content;
+            $comment->user_id=$request->user_id;
+            $comment->post_id=$request->post_id;
+            $comment->save();
+            // $data=Comment::get();
+            // foreach($data as $r){
+            //     $output.='<div class="row row-list-comment my-2">'
+            //     .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
+            //     <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
+            //     <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+            //             <a href="#"><i class="fas fa-exclamation"></i> Report</a>
+            //         </div>
+            //     </div>
+            // </div>';
+            // }
+        }   
+        $rs = array(
+            //'data'=>$output,
+            'msg' => 'Setting created successfully',
+        );         
+        // $data= array(
+        //     'data'=>$output
+        // );
+        //echo json_encode($data);
+        //return redirect()->route('posts.show',$post->id)->with('data',$output);
+        //return redirect()->route('posts.index');
+        return response()->json($rs);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,9 +77,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -46,28 +97,28 @@ class CommentController extends Controller
         // ]);
         // return redirect()->route('posts.show',$post->id);
             //dd($request->ajax());
+        dd($request-ajax());
         if(!$request->ajax()){
             $output='';
             $comment= new Comment;
             $comment->content=$request->content;
-            $comment->user_id=1;
+            $comment->user_id=$request->user_id;
             $comment->post_id=$request->post_id;
             $comment->save();
-            $data=Comment::get();
-            foreach($data as $r){
-                $output.='<div class="row row-list-comment my-2">'
-                .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
-                <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
-                <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                        <a href="#"><i class="fas fa-exclamation"></i> Report</a>
-                    </div>
-                </div>
-            </div>';
-            }
+            // $data=Comment::get();
+            // foreach($data as $r){
+            //     $output.='<div class="row row-list-comment my-2">'
+            //     .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
+            //     <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
+            //     <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+            //             <a href="#"><i class="fas fa-exclamation"></i> Report</a>
+            //         </div>
+            //     </div>
+            // </div>';
+            // }
         }   
-        $response = array(
+        $rs = array(
             'data'=>$output,
-            'status' => 'success',
             'msg' => 'Setting created successfully',
         );         
         // $data= array(
@@ -76,9 +127,8 @@ class CommentController extends Controller
         //echo json_encode($data);
         //return redirect()->route('posts.show',$post->id)->with('data',$output);
         //return redirect()->route('posts.index');
-        return Response::json($response);
+        return response()->json($rs);
     }
-
     /**
      * Display the specified resource.
      *
@@ -89,7 +139,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -100,7 +149,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -112,7 +160,6 @@ class CommentController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *

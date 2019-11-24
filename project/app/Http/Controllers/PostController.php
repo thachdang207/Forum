@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Category;
 use App\Comment;
+
 class PostController extends Controller
 {
     /**
@@ -21,15 +22,18 @@ class PostController extends Controller
         // ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
         // ->get();
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
-        ->select('users.name', 'posts.*','user_id as count_comment')
-        ->getQuery()->paginate(3);
+        ->select('users.name', 'posts.*')->selectSub(function ($query) {
+            $query->selectRaw('0');
+        }, 'count_report')
+        ->getQuery()->get();//->paginate(3);
         foreach($posts as $post) {
             $count_comment=0;
+            $count_report=0;
             $post_id=$post->id;
-            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->count();
-
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$post->id)->get()->count();
+            $count_report=Post::Join('reports','posts.id','=','reports.post_id')->Where('reports.post_id','=',$post->id)->get()->count();
             $category_post=Category::Where('id','=',$post->category_id)->first();
-
+            $post->count_report=$count_report;
             $post->count_comment=$count_comment;
             $post->category_id=$category_post;
         }
@@ -44,51 +48,50 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories=Category::GET();
-        return view('posts/create',['categories'=>$categories]);
+        $categories = Category::GET();
+        return view('posts/create', ['categories' => $categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $result=Category::GET();
+        $result = Category::GET();
         //dd(count($result));
-        if(isset($_POST['otherCategory'])&& !empty($_POST['otherCategory'])){
+        if (isset($_POST['otherCategory']) && !empty($_POST['otherCategory'])) {
 
             Category::insert([
-                "name"=>$_POST['otherCategory'],
-                "created_at"=>now(),
-                "updated_at"=>now(),
+                "name" => $_POST['otherCategory'],
+                "created_at" => now(),
+                "updated_at" => now(),
             ]);
             Post::insert(
                 [
-                    "title"=>$_POST['title'],
-                    "description"=>$_POST['description'],
-                    "content"=>$_POST['content'],
-                    "category_id"=>count($result)+1,
+                    "title" => $_POST['title'],
+                    "description" => $_POST['description'],
+                    "content" => $_POST['content'],
+                    "category_id" => count($result) + 1,
                     // "user_id"=>$_SESSION['uid'],
-                    "user_id"=>"12",
-                    "created_at"=>now(),
-                    "updated_at"=>now(),
+                    "user_id" => "12",
+                    "created_at" => now(),
+                    "updated_at" => now(),
                 ]
             );
-        }
-        else{
+        } else {
             Post::insert(
                 [
-                    "title"=>$_POST['title'],
-                    "description"=>$_POST['description'],
-                    "content"=>$_POST['content'],
-                    "category_id"=>$_POST['category_id'],
+                    "title" => $_POST['title'],
+                    "description" => $_POST['description'],
+                    "content" => $_POST['content'],
+                    "category_id" => $_POST['category_id'],
                     // "user_id"=>$_SESSION['uid'],
-                    "user_id"=>"12",
-                    "created_at"=>now(),
-                    "updated_at"=>now(),
+                    "user_id" => "12",
+                    "created_at" => now(),
+                    "updated_at" => now(),
                 ]
             );
         }
@@ -98,7 +101,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -159,19 +162,32 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
     {
         //
     }
+    public function showReportsOfPost($id){
+        $reportsOfPost=Post::join('reports', 'posts.id', '=', 'reports.post_id')->where('reports.post_id','=',$id)
+        ->join('users', 'posts.user_id', '=', 'users.id')
+        ->select('posts.*','reports.content','users.name','reports.user_id')
+        ->getQuery()
+        ->get();
+        foreach($reportsOfPost as $reportOfPost) {
+            $name='';
+            $name=User::Where('users.id','=',$reportOfPost->user_id)->first();
+            $reportOfPost->user_id=$name;
+        }
+        return view('posts/showReportsOfPost',['reportsOfPost'=>$reportsOfPost]);
+    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
@@ -182,7 +198,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
@@ -190,35 +206,11 @@ class PostController extends Controller
         // Comment::destroy()
         // $post1 = Post::find($post->id);
         // $post1->comments()->detach();
+        $post->foreign('post_id')
+            ->references('id')->on('posts')
+            ->onDelete('cascade');
         POST::destroy($post->id);
         return redirect()->route('posts.index');
     }
-    public function comment(Request $request, Post $post ){
-        $post = Post::findOrFail($request->post_id);
-        if(!$request->ajax()){
-            $output='';
-            $comment= new Comment;
-            $comment->content=$request->content;
-            $comment->user_id=1;
-            $comment->post_id=$request->post_id;
-            $comment->save();
-            $data=Comment::get();
-            foreach($data as $r){
-                $output.='<div class="row row-list-comment my-2">'
-                .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
-                <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
-                <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                        <a href="#"><i class="fas fa-exclamation"></i> Report</a>
-                    </div>
-                </div>
-            </div>';
-            }
-        }   
-        $response = array(
-            'data'=>$output,
-            'status' => 'success',
-            'msg' => 'Setting created successfully',
-        );
-        return Response::json($response);
-    }
+
 }
