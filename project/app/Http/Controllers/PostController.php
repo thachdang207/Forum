@@ -15,6 +15,25 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function searchPosts()
+    {
+        $key=$_GET['key'];
+        //$orders = Post::where('title', 'like', '%' . $key . '%')->get();
+        $postsOfCategory=Category::Join('posts','categories.id','=','posts.category_id')->where('title', 'like', '%' . $key . '%')
+        ->select('categories.name','posts.*')
+        ->getQuery()->get();
+        foreach($postsOfCategory as $postOfCategory) {
+            $count_comment=0;
+            $post_id=$postOfCategory->id;
+            $count_comment=Post::Join('comments','posts.id','=','comments.post_id')->Where('comments.post_id','=',$postOfCategory->id)->count();
+
+            $user_result=User::Where('id','=',$postOfCategory->user_id)->first();
+
+            $postOfCategory->count_comment=$count_comment;
+            $postOfCategory->userName=$user_result;
+        }
+        return view('searches/search',['posts'=>$postsOfCategory]);
+    }
     public function index()
     {
         // $result = User::join('posts', 'users.id', '=', 'posts.user_id')
@@ -24,8 +43,8 @@ class PostController extends Controller
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*')->selectSub(function ($query) {
             $query->selectRaw('0');
-        }, 'count_report')
-        ->getQuery()->get();//->paginate(3);
+        }, 'count_report')->orderBy('updated_at', 'desc')
+        ->getQuery()->paginate(3);
         foreach($posts as $post) {
             $count_comment=0;
             $count_report=0;
@@ -197,4 +216,5 @@ class PostController extends Controller
         // POST::destroy($post->id);
         return redirect()->route('posts.index');
     }
+
 }

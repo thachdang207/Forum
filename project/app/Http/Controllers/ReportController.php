@@ -53,7 +53,6 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-<<<<<<< HEAD
         $reportsOfPost=Post::join('reports', 'posts.id', '=', 'reports.post_id')->where('reports.post_id','=',$id)
         ->join('users', 'posts.user_id', '=', 'users.id')
         ->select('posts.*','reports.content','users.name','reports.user_id')
@@ -65,9 +64,6 @@ class ReportController extends Controller
             $reportOfPost->user_id=$name;
         }
         return view('posts/showReportsOfPost',['reportsOfPost'=>$reportsOfPost]);
-=======
-        dd($report->post_id);
->>>>>>> da1f46e50742836c18b46cc17aaf68534a29977a
     }
 
     /**

@@ -19,7 +19,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="{{asset('css/phong/login.js')}}"></script>
-        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>  
         <div class="container header">
             <div class="row">
                 <div class="col-12 p-0 bg-green" >
@@ -98,9 +100,10 @@
                     </ul>
                 </div>
                 <div class="col-9 d-flex justify-content-end align-items-center">
-                    <form class=" ">
-                        <input class="" type="search" placeholder="Search" aria-label="Search">
-                        <button class=""type="submit"><i class="fas fa-search"></i></button>
+                    <form class="" action="{{ route('posts.searchPosts') }}" method="GET">
+                        <input class="typeahead border rounded mr-2" type="search" placeholder="Search" aria-label="Search" name="key">
+                        <input class=""type="submit" value="Tim">
+                        {{--  <i class="fas fa-search"></i>  --}}
                     </form>
                 </div>
             </div>
@@ -108,5 +111,15 @@
             <a href="{{route('posts.index')}}"><i class="fas fa-home"></i> Home</a>
             </div>
         </div>
+        <script type="text/javascript">
+            var path = "{{ route('autocomplete') }}";
+            $('input.typeahead').typeahead({
+                source:  function (query, process) {
+                return $.get(path, { query: query }, function (data) {
+                        return process(data);
+                    });
+                }
+            });
+          </script>
 
   

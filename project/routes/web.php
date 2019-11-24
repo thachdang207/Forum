@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return redirect(route("posts.index"));
 });
+Route::get('search',array('as'=>'search','uses'=>'SearchController@search'));
+Route::get('autocomplete',array('as'=>'autocomplete','uses'=>'SearchController@autocomplete'));
+Route::get('/','PostController@searchPosts')->name('posts.searchPosts');
 Route::get('/postsOfUser/{id}','PostController@showPostsOfUser')->name('posts.showPostsOfUser');
 Route::resource('posts', 'PostController');
 Route::resource('categories', 'CategoryController');

@@ -31,4 +31,8 @@ button:hover {
 .container .row .col-md-6-mt-6 {
   margin-top: 50px;
 }
+
+.twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+  width: 20%;
+}
 /*# sourceMappingURL=style.css.map */
