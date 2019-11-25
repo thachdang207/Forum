@@ -12,7 +12,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
+        @include('header')
+    <div class="container py-3"style="border:solid 1px #1fa67a; border-radius:5px">
         <div class="row">
             <div class="col-12 col-md-8">
                 <form action="/posts" method="POST">

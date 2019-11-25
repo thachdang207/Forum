@@ -27,6 +27,15 @@ body {
   color: #1fa67a;
 }
 
+.container-content .post-row .col-2 h5 a {
+  color: #1fa67a;
+  text-decoration: none;
+}
+
+.container-content .post-row .col-2 h5 a:hover {
+  color: #ac5353;
+}
+
 .container-content .post-row .col-3 p {
   margin: 10px 0;
 }
@@ -77,6 +86,15 @@ body {
   font-weight: bold;
 }
 
+.container-comment .row-list-comment .col-8 p a {
+  color: #1fa67a;
+  text-decoration: none;
+}
+
+.container-comment .row-list-comment .col-8 p a:hover {
+  color: #ac5353;
+}
+
 .container-comment .row-list-comment .col-8 .content {
   margin-left: 20px;
 }
@@ -94,20 +112,24 @@ body {
   color: #1fa67a;
 }
 
+.container-comment .row-list-comment .col-8 .items a .fas {
+  color: red;
+}
+
 .container-comment .row-list-comment .col-8 .items a:hover {
   color: #ac5353;
 }
 
-.container-comment .row-comment {
+.container-add-comment .row-comment {
   border-top: 3px solid black;
   padding: 10px;
 }
 
-.container-comment .row-comment .col-12 form {
+.container-add-comment .row-comment .col-12 form {
   margin-top: 18px;
 }
 
-.container-comment .row-comment .col-12 form button {
+.container-add-comment .row-comment .col-12 form button {
   background-color: #1fa67a;
   border: none;
   padding: 5px 20px;
@@ -116,7 +138,7 @@ body {
   outline: none;
 }
 
-.container-comment .row-comment .col-12 form button:hover {
+.container-add-comment .row-comment .col-12 form button:hover {
   color: #1fa67a;
   background-color: white;
 }

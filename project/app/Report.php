@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    protected $fillable=["content","post_id","user_id"];
-    public function post(){
+    protected $fillable = ["content", "post_id", "user_id"];
+
+    public function post()
+    {
         return $this->beLongTo('App\Post');
     }
-    public function user(){
+
+    public function user()
+    {
         return $this->beLongTo('App\User');
     }
 }

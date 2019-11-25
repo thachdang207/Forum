@@ -1,12 +1,17 @@
+
 @include('header')
     <!--Phong-->
+    
     <div class="container container-content">
         <div class="row post-row">
             <div class="col-2 d-flex align-items-center">
                     <div class="avatar"></div>
             </div>
             <div class="col-2 d-flex ">
-                <h5>{{ $user->name }}</h5>
+                <h5><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
+                        {{ $user->name }}
+                      </a>{{-- $user->name --}}</h5>
+                
             </div>     
             <div class="col-3 offset-5 d-flex  flex-column align-items-end ">
                 <p>Post at: {{ $post->created_at}}</p>
@@ -23,111 +28,65 @@
             <div class="mx-3">{!! $post->content !!}</div>
         </div>
     </div>
+
+      {{-- comment --}}
+
     <div class="container container-comment mt-5">
         <div class="row">
             <div class="col-12">
                 <h5>Comment:</h5>
             </div>
-        </div>    
+        </div>
         @foreach($comments as $comment)
             <div class="row row-list-comment my-2">
                 <div class="col-8">
-                    <p><i class="fas fa-user mr-2"></i>{{ $comment->name}}</p>
+                    <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$comment->user_id)}}">
+                        {{ $comment->name}} 
+                      </a></p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1">
-                        <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
+                        {{-- <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a> --}}
                         <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                        <a href="#"><i class="fas fa-exclamation"></i> Report</a>
+                        <a href="#"><i class="fas fa-exclamation"></i> Report </a>
                     </div>
                 </div>
             </div>  
         @endforeach
+    </div>
+    <div class="container container-add-comment">
         <div class="row row-comment">
             <div class="col-12">
-                <form method="POST" action="{{route('comments.store',$post->id)}}">
-                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                @if(Auth::check())
+                <form {{--method="POST"--}} action="{{--route('comments.store')--}}">
+                    {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
                     <div class="form-group">
-                        <textarea class="form-control" id="exampleInputEmail1" name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
+                        <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
                     </div>
                     {{----}}
-                        <input type="hidden" class="form-control" name="post_id"  value={{$post->id}} >
-                        @if(Auth::check())
-                            <input type="hidden" class="form-control" name="user_id"  value={{Auth::user()->id}} >
-                        @endif
-                    <button type="submit" class="" name="add">Add</button>
+                        <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
+                        
+                            <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{Auth::user()->id}} >
+                            <input type="hidden" class="form-control user-name-comment" name="user_name"  value={{Auth::user()->name}} >
+                       
+                    <button id="add-comment" class="" name="add">Add</button>
                 </form>
+                @else
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
+                    </div>
+                    {{----}}
+                        <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
+                        
+                    <button id="add-comment-2" class="" name="add">Add</button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
-<!--end--> 
-<!--
-    <div class="container mt-5">
-        <div class="row d-flex">
-            <div class="col-12 col-md-8 col-sm-12">
-                <h3>{{ $post->title }}</h3>
-                <span class="badge badge-success mb-5">{{ $category->name }}</span>
-                <p>{{ $post->content }}</p>
-                <div class="d-flex justify-content-end">
-                    {{-- <p>by <a href="{{ $user->id }}">{{ $user->name }}</a></p> --}}
-                    <p>by <a href="#">{{ $user->name }}</a></p> 
-                </div>
-                <hr>
-                <div class="ml-3">
-                    <h3 class=""><u>Comments</u></h3>
-                    <ul class="list-unstyled">
-                        @foreach($comments as $comment)
-                            <div class="border-bottom mt-1">
-                                <li class="ml-1">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-user-edit mr-2"></i>
-                                        <a href="#"><b>{{ $comment->name }}</b></a>
-                                    </div>
-                                    <p class="ml-4 mb-0">{{ $comment->content }}</p>
-                                    <div class="ml-4">
-                                        <div class="d-flex align-items-center mb-1">
-                                            <a href="#" class="mr-3"><i class="far fa-thumbs-up"> Like</i></a>
-                                            <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                                            <a href="#"><i class="fas fa-exclamation"></i> Report</a>
-                                        </div>
-                                        <div id="" style="display:none" class="textComment">
-                                            <br>
-                                            <form action="">
-                                                <textarea name="comment" id="" cols="90" rows="2"></textarea>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
-                            </div>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            <div class="col-0 col-md-4">
-                    {{-- <h3 class="">{{ $category->name }}</h3> --}}
-                    <h3>Bài viết liên quan đến Category</h3>
-                    <ul class="list-unstyled">
-                            @foreach($posts as $post)
-                            <div class="border-bottom mt-1">
-                                <li class="ml-1">
-                                    <a href="{{ route('posts.show',$post->id) }}" class="text-primary">
-                                        <h5 class="card-title">{{ $post->title }}</h5>
-                                    </a>
-                                    <p class="text-muted">{{ $post->description }}</p>
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-user mr-2"></i>
-                                        <a href="#">
-                                                {{ $post->name }}
-                                        </a>
-                                    </div>
-                                </li>
-                            </div>
-                            @endforeach
-                    </ul>
-            </div>
-        </div>
-    </div>
--->
-    <script>
+
+
+    {{-- <script>
         var i=0;
             $(document).ready(function()
                 {
@@ -142,10 +101,47 @@
                         }
                     });
                 });
-    </script>
-      <script>
-            // Thay thế <textarea id="post_content"> với CKEditor
-          //  CKEDITOR.replace( 'content' );// tham số là biến name của textarea
+    </script> --}}
+        <script src="{{--asset('css/phong/jquery.js')--}}"></script>
+        <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var user_id=0;
+            var user_name="";
+            
+   
+            $("#add-comment").click(function(e){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }   
+                });
+                e.preventDefault();
+                var content = $("textarea[name=content]").val();
+                var post_id = $("input[name=post_id]").val();
+                user_id = $("input[name=user_id]").val();
+                user_name = $("input[name=user_name]").val();
+                $.ajax({
+                   type:'POST',
+                   url:"{{route('comments.store')}}",
+        
+                   data:{content:content, post_id:post_id, user_id:user_id, user_name:user_name},
+                    
+                    dataType:'json',
+                   success:function(data){
+                        $('.container-comment').append(data.data);
+                        
+                     // alert(data.success);
+                   }
+        
+                });
+            
+
+            });
+            $("#add-comment-2").click(function(e){
+                $('.container-comment').append('<p clas="text-danger"> Vui long dang nhap tai khoan</p>');
+            });
+        });
         </script>
 </body>
 </html>

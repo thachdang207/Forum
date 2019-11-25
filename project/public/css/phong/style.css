@@ -40,30 +40,30 @@ body {
   border-radius: 5px;
 }
 
-.header .row-2 .col-3 ul {
+.header .row-2 .col-6 ul {
   margin: 0;
   padding: 0;
 }
 
-.header .row-2 .col-3 ul li {
+.header .row-2 .col-6 ul li {
   list-style: none;
   margin: 5px 10px;
 }
 
-.header .row-2 .col-3 ul li a {
+.header .row-2 .col-6 ul li a {
   text-decoration: none;
   color: #1fa67a;
 }
 
-.header .row-2 .col-3 ul li a:hover {
+.header .row-2 .col-6 ul li a:hover {
   color: #ac5353;
 }
 
-.header .row-2 .col-9 {
+.header .row-2 .col-6 {
   padding: 0;
 }
 
-.header .row-2 .col-9 form input {
+.header .row-2 .col-6 form input {
   border: none;
   border-radius: 2px;
   padding: 2px 4px;
@@ -73,7 +73,7 @@ body {
   background: white;
 }
 
-.header .row-2 .col-9 form button {
+.header .row-2 .col-6 form button {
   background-color: white;
   border: none;
   margin-left: -4px;
@@ -83,7 +83,7 @@ body {
   outline: none;
 }
 
-.header .row-2 .col-9 form button i {
+.header .row-2 .col-6 form button i {
   color: #1fa67a;
 }
 
@@ -136,12 +136,12 @@ body {
   background-image: url("../img/no_avatar_male_hd.png");
 }
 
-.container-body1 .row-post .col-9 .title a {
+.container-body1 .row-post .col-8 .title a {
   text-decoration: none;
   color: #1fa67a;
 }
 
-.container-body1 .row-post .col-9 p {
+.container-body1 .row-post .col-8 p {
   margin: 0;
   font-size: 14px;
   color: black;
@@ -157,9 +157,14 @@ body {
   color: black;
 }
 
-.container-body1 .row-post .col-2 .admin {
+.container-body1 .row-post .col-2 .admin a {
+  text-decoration: none;
   color: #1fa67a;
   font-weight: bold;
+}
+
+.container-body1 .row-post .col-2 .admin a:hover {
+  color: #ac5353;
 }
 
 .container-body1 .row-post .col-2 p {
@@ -226,9 +231,14 @@ body {
   color: black;
 }
 
-.container-category .row-post .col-2 .admin {
+.container-category .row-post .col-2 .admin a {
   color: #1fa67a;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.container-category .row-post .col-2 .admin a:hover {
+  color: #ac5353;
 }
 
 .container-category .row-post .col-2 p {
