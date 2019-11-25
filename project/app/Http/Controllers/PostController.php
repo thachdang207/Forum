@@ -121,7 +121,7 @@ class PostController extends Controller
         ->getQuery()
         ->get();
 
-        $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.id','comments.content','users.name')
+        $comments_result = User::join('comments','comments.user_id','=','users.id')->where('comments.post_id','=',$post_id)->select('comments.id','comments.content','users.name','comments.user_id')
         ->getQuery()
         ->orderBy('comments.id', 'desc')
         ->get();

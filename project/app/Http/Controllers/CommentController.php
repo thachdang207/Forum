@@ -11,23 +11,6 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function addcomment(Request $request){
-
-        $post = Post::findOrFail($request->post_id);
-        if(!$request->ajax()){
-            $output='';
-            $comment= new Comment;
-            $comment->content=$request->content;
-            $comment->user_id=$request->user_id;
-            $comment->post_id=$request->post_id;
-            $comment->save();
-        }   
-        $rs = array(
-            //'data'=>$output,
-            'msg' => 'Setting created successfully',
-        );         
-        return response()->json($rs);
-    }
     public function index()
     {
         $post = Post::findOrFail($request->post_id);
@@ -88,46 +71,55 @@ class CommentController extends Controller
     
     public function store(Request $request)
     {
-         $post = Post::findOrFail($request->post_id);
-        // //$user = Auth::user();
-        // Comment::create([
-        //     'content' => $request->content,
-        //     'user_id' => 1,/////
-        //     'post_id' => $post->id
-        // ]);
-        // return redirect()->route('posts.show',$post->id);
-            //dd($request->ajax());
-        dd($request-ajax());
-        if(!$request->ajax()){
-            $output='';
-            $comment= new Comment;
-            $comment->content=$request->content;
-            $comment->user_id=$request->user_id;
-            $comment->post_id=$request->post_id;
-            $comment->save();
-            // $data=Comment::get();
-            // foreach($data as $r){
-            //     $output.='<div class="row row-list-comment my-2">'
-            //     .'<div class="col-8">'.'<p><i class="fas fa-user mr-2"></i>'/*$user->name*/.'phong'.'</p>'.'<div class="content">'.$r->content.'</div>'.'<div class="items d-flex align-items-center mb-1">
-            //     <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a>
-            //     <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-            //             <a href="#"><i class="fas fa-exclamation"></i> Report</a>
-            //         </div>
-            //     </div>
-            // </div>';
-            // }
-        }   
-        $rs = array(
-            'data'=>$output,
-            'msg' => 'Setting created successfully',
-        );         
-        // $data= array(
-        //     'data'=>$output
-        // );
-        //echo json_encode($data);
-        //return redirect()->route('posts.show',$post->id)->with('data',$output);
-        //return redirect()->route('posts.index');
-        return response()->json($rs);
+        $content=$request->content;
+        $post_id= $request->post_id;
+        $user_id= $request->user_id;
+        $user_name= $request->user_name;
+        $comment = new Comment;
+        $comment->content=$content;
+        $comment->post_id=$post_id;
+        $comment->user_id=$user_id;
+        $comment->save();
+        $output="";
+        //$data = Comment::get();
+        if($user_id==0 &&$user_name=''){
+            $output="error";
+        }
+        else{
+        $output='<div class="row row-list-comment my-2">
+                 <div class="col-8">
+                     <p><i class="fas fa-user mr-2"></i><a href="{{ route(\'posts.showPostsOfUser\',$comment->user_id)}}">'.$user_name.'</a></p>
+                     <div class="content">'.$content.'</div>
+                     <div class="items d-flex align-items-center mb-1">
+                         <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+                         <a href="#"><i class="fas fa-exclamation"></i> Report </a>
+                     </div>
+                 </div>
+             </div>';
+            }
+       // $user_result=User::Where('id','=',$request->user_id)->first();
+        // <div class="row row-list-comment my-2">
+        //         <div class="col-8">
+        //             <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$comment->user_id)}}">
+        //                 {{ $comment->name}} 
+        //               </a></p>
+        //             <div class="content">{!! $comment->content !!}</div>
+        //             <div class="items d-flex align-items-center mb-1">
+        //                 {{-- <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a> --}}
+        //                 <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+        //                 <a href="#"><i class="fas fa-exclamation"></i> Report </a>
+        //             </div>
+        //         </div>
+        //     </div>
+            
+        return response()->json([
+            'success'=>'Got Simple Ajax Request.',
+            'content'=>$content,
+            'user'=>$user_id,
+            'post_id'=>$post_id,
+            'name'=>$user_name,
+            'data'=>$output
+            ]);
     }
     /**
      * Display the specified resource.

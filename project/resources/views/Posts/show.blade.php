@@ -30,17 +30,18 @@
     </div>
 
       {{-- comment --}}
+
     <div class="container container-comment mt-5">
         <div class="row">
             <div class="col-12">
                 <h5>Comment:</h5>
             </div>
-        </div>    
+        </div>
         @foreach($comments as $comment)
             <div class="row row-list-comment my-2">
                 <div class="col-8">
-                    <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
-                        {{ $comment->name}} {{ $user->name }}
+                    <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$comment->user_id)}}">
+                        {{ $comment->name}} 
                       </a></p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1">
@@ -51,8 +52,11 @@
                 </div>
             </div>  
         @endforeach
+    </div>
+    <div class="container container-add-comment">
         <div class="row row-comment">
             <div class="col-12">
+                @if(Auth::check())
                 <form {{--method="POST"--}} action="{{--route('comments.store')--}}">
                     {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
                     <div class="form-group">
@@ -60,14 +64,27 @@
                     </div>
                     {{----}}
                         <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
-                        @if(Auth::check())
+                        
                             <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{Auth::user()->id}} >
-                        @endif
+                            <input type="hidden" class="form-control user-name-comment" name="user_name"  value={{Auth::user()->name}} >
+                       
                     <button id="add-comment" class="" name="add">Add</button>
                 </form>
+                @else
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
+                    </div>
+                    {{----}}
+                        <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
+                        
+                    <button id="add-comment-2" class="" name="add">Add</button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
+
 
     {{-- <script>
         var i=0;
@@ -86,37 +103,45 @@
                 });
     </script> --}}
         <script src="{{--asset('css/phong/jquery.js')--}}"></script>
-        <script>
-            $(document).ready(function(){
-                $("#add-comment").click(function(e){
-                    e.preventDefault();
-                    var content=$(".content-comment").val();
-                    var post_id=$(".post-id-comment").val();
-                    var user_id=$(".user-id-comment").val();
-                    console.log(content);
-                    console.log(post_id);
-                    console.log(user_id);
-                    //$.ajaxSetup({
-                    //    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-                    //    });
-                    $.ajax({
-                        type:"POST",
-                        url:"/test",
-                        data: {
-                             _token: '{!! csrf_field() !!}',
-                             content:content,
-                             post_id:post_id,
-                             user_id:user_id
-                         },
-                        dataType:'json',
-                        async:true,
-                        success:function(data){
-                            $(".container-comment").append(rs.msg);
-                        }
-                    });
-                    
+        <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var user_id=0;
+            var user_name="";
+            
+   
+            $("#add-comment").click(function(e){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }   
                 });
+                e.preventDefault();
+                var content = $("textarea[name=content]").val();
+                var post_id = $("input[name=post_id]").val();
+                user_id = $("input[name=user_id]").val();
+                user_name = $("input[name=user_name]").val();
+                $.ajax({
+                   type:'POST',
+                   url:"{{route('comments.store')}}",
+        
+                   data:{content:content, post_id:post_id, user_id:user_id, user_name:user_name},
+                    
+                    dataType:'json',
+                   success:function(data){
+                        $('.container-comment').append(data.data);
+                        
+                     // alert(data.success);
+                   }
+        
+                });
+            
+
             });
-         </script>
+            $("#add-comment-2").click(function(e){
+                $('.container-comment').append('<p clas="text-danger"> Vui long dang nhap tai khoan</p>');
+            });
+        });
+        </script>
 </body>
 </html>

@@ -120,16 +120,16 @@ body {
   color: #ac5353;
 }
 
-.container-comment .row-comment {
+.container-add-comment .row-comment {
   border-top: 3px solid black;
   padding: 10px;
 }
 
-.container-comment .row-comment .col-12 form {
+.container-add-comment .row-comment .col-12 form {
   margin-top: 18px;
 }
 
-.container-comment .row-comment .col-12 form button {
+.container-add-comment .row-comment .col-12 form button {
   background-color: #1fa67a;
   border: none;
   padding: 5px 20px;
@@ -138,7 +138,7 @@ body {
   outline: none;
 }
 
-.container-comment .row-comment .col-12 form button:hover {
+.container-add-comment .row-comment .col-12 form button:hover {
   color: #1fa67a;
   background-color: white;
 }

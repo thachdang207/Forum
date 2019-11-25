@@ -26,6 +26,3 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-route::post('comments/add','CommentController@addcomment');
-
-route::post('test','CommentController@addcomment');
