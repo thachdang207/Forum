@@ -64,9 +64,8 @@
                     </div>
                     {{----}}
                         <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
-                        
-                            <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{Auth::user()->id}} >
-                            <input type="hidden" class="form-control user-name-comment" name="user_name"  value={{Auth::user()->name}} >
+                        <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{Auth::user()->id}} >
+                        <input type="hidden" class="form-control user-name-comment" name="user_name"  value={{Auth::user()->name}} >
                        
                     <button id="add-comment" class="" name="add">Add</button>
                 </form>
