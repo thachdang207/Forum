@@ -112,8 +112,12 @@ body {
   color: #1fa67a;
 }
 
-.container-comment .row-list-comment .col-8 .items a .fas {
-  color: red;
+.container-comment .row-list-comment .col-8 .items a .fa-exclamation {
+  color: #c22004;
+}
+
+.container-comment .row-list-comment .col-8 .items a .fa-trash {
+  color: #288ae0;
 }
 
 .container-comment .row-list-comment .col-8 .items a:hover {
