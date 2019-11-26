@@ -86,38 +86,26 @@ class CommentController extends Controller
             $output="error";
         }
         else{
-        $output='<div class="row row-list-comment my-2">
+        $output='
+            <div class="row row-list-comment my-2">
                  <div class="col-8">
                      <p><i class="fas fa-user mr-2"></i><a href="{{ route(\'posts.showPostsOfUser\',$comment->user_id)}}">'.$user_name.'</a></p>
                      <div class="content">'.$content.'</div>
                      <div class="items d-flex align-items-center mb-1">
                          <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-                         <a href="#"><i class="fas fa-exclamation"></i> Report </a>
+                         <a href="#"><i class="fas fa-exclamation mr-3"> Report</i> </a>
+                         <a href="" class="mr-3 delete-comment" data-id="{{ $comment->id }}" data-token="{{ csrf_token() }}">
+                            <i class="fas fa-trash mr-3"> Delete</i>
+                        </a>
                      </div>
                  </div>
+                 <div class="col-4 d-flex align-items-end justify-content-end">
+                   <p> Create_At: '.$comment->created_at.'</p>
+                </div>
              </div>';
             }
-       // $user_result=User::Where('id','=',$request->user_id)->first();
-        // <div class="row row-list-comment my-2">
-        //         <div class="col-8">
-        //             <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$comment->user_id)}}">
-        //                 {{ $comment->name}} 
-        //               </a></p>
-        //             <div class="content">{!! $comment->content !!}</div>
-        //             <div class="items d-flex align-items-center mb-1">
-        //                 {{-- <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a> --}}
-        //                 <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
-        //                 <a href="#"><i class="fas fa-exclamation"></i> Report </a>
-        //             </div>
-        //         </div>
-        //     </div>
             
         return response()->json([
-            'success'=>'Got Simple Ajax Request.',
-            'content'=>$content,
-            'user'=>$user_id,
-            'post_id'=>$post_id,
-            'name'=>$user_name,
             'data'=>$output
             ]);
     }
@@ -160,6 +148,12 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        Comment::destroy($comment->id); 
+        return ['status'=> true] ; 
+    }
+    public function DestroyComment( $id)
+    {
+        Comment::destroy($id); 
+        return ['status'=> true] ; 
     }
 }
