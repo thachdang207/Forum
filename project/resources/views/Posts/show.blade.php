@@ -9,13 +9,12 @@
             <div class="col-2 d-flex ">
                 <h5><a href="{{ route('posts.showPostsOfUser',$post->user_id)}}">
                         {{ $user->name }}
-                      </a>{{-- $user->name --}}</h5>
+                    </a>
+                </h5>
                 
             </div>     
             <div class="col-3 offset-5 d-flex  flex-column align-items-end ">
                 <p>Post at: {{ $post->created_at}}</p>
-                {{--  <small>time</small>
-                <small>Post</small>  --}}
             </div>      
             </div>
         <div class="row post-title">
@@ -44,7 +43,7 @@
                       </a></p>
                     <div class="content">{!! $comment->content !!}</div>
                     <div class="items d-flex align-items-center mb-1"> 
-                        <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i>Comment </a>
+                        <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment </a>
                         <a href="#"><i class="fas fa-exclamation mr-3"> Report</i>  </a>
                     @if(Auth::check()) 
                         @if(Auth::user()->isAdmin()||Auth::user()->id==$post->user_id||Auth::user()->id==$comment->user_id)
@@ -65,12 +64,10 @@
         <div class="row row-comment p-0">
             <div class="col-12 p-0">
                 @if(Auth::check())
-                <form {{--method="POST"--}} action="{{--route('comments.store')--}}">
-                    {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
+                <form >
                     <div class="form-group">
                         <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
                     </div>
-                    {{----}}
                         <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
                         
                             <input type="hidden" class="form-control user-id-comment" name="user_id"  value={{Auth::user()->id}} >
@@ -83,7 +80,6 @@
                     <div class="form-group">
                         <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
                     </div>
-                    {{----}}
                         <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
                         
                     <button id="add-comment-2" class="" name="add">Add</button>
@@ -93,23 +89,6 @@
         </div>
     </div>
 
-
-    {{-- <script>
-        var i=0;
-            $(document).ready(function()
-                {
-                    $(".comment").click(function(){
-                        if(i==0){
-                            $(".textComment").css("display", "flex");
-                            i=1;
-                        }
-                        else{
-                            $(".textComment").css("display", "none");
-                            i=0;
-                        }
-                    });
-                });
-    </script> --}}
         <script src="{{--asset('css/phong/jquery.js')--}}"></script>
         <script type="text/javascript">
         $(document).ready(function()
@@ -139,7 +118,6 @@
                     dataType:'json',
                    success:function(data){
                         $('.container-comment').append(data.data);
-                     // alert(data.success);
                    }
         
                 });

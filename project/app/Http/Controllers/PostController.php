@@ -210,9 +210,9 @@ class PostController extends Controller
         // Comment::destroy()
         // $post1 = Post::find($post->id);
         // $post1->comments()->detach();
-        $post->foreign('post_id')
-            ->references('id')->on('posts')
-            ->onDelete('cascade');
+        // $post->foreign('post_id')
+        //     ->references('id')->on('posts')
+        //     ->onDelete('cascade');
         POST::destroy($post->id);
         return redirect()->route('posts.index');
     }

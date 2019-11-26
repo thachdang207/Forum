@@ -13,6 +13,7 @@
 </head>
 <body>
         @include('header')
+    @if(Auth::Check())
     <div class="container py-3"style="border:solid 1px #1fa67a; border-radius:5px">
         <div class="row">
             <div class="col-12 col-md-8">
@@ -54,9 +55,16 @@
             </div>
         </div>
     </div>
-    {{-- <script>
+    @else 
+        <div>
+            <h6>Vui lòng đăng nhập</h6>
+        </div>
+    @endif
+
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script>
         CKEDITOR.replace('content');
-    </script> --}}
+    </script>
     <script>
         function show(){
             document.getElementById('inputOtherCategory').style.display="flex";

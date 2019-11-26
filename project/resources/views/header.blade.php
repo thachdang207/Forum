@@ -62,13 +62,15 @@
             <div class="row row-2">
                 <div class="col-6 m-0 p-0">
                     <ul class="d-flex list">
+                            @if(Auth::check())
                         <li>
-                            <a class="" href="#"><i class="fas fa-search mr-1"></i>Search</a>
+                            <a class="" href="/posts/create"><i class="fas fa-search mr-1"></i>Search</a>
                         </li>
+                            @endif
                         @if(Auth::check())
                             @if (Auth::user()->isAdmin())
                                 <li>
-                                    <a class="" href="#">Hi Admin:{{Auth::user()->name}}</a>
+                                    <a class="" href="{{route('posts.showPostsOfUser',Auth::user()->id)}}">Hi Admin:{{Auth::user()->name}}</a>
                                 </li>
                                 <li>
                                     <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
@@ -76,7 +78,7 @@
                             @endif
                             @if (Auth::user()->isUser())
                                 <li>
-                                    <a class="" href="#">Hi User:{{Auth::user()->name}}</a>
+                                    <a class="" href="{{route('posts.showPostsOfUser',Auth::user()->id)}}">Hi User:{{Auth::user()->name}}</a>
                                 </li>
                                 <li>
                                     <a class="" href="/logout"><i class="fas fa-sign-in-alt"></i>Logout</a>
