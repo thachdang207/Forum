@@ -24,8 +24,7 @@ class PostController extends Controller
         $posts=User::join('posts', 'users.id', '=', 'posts.user_id')
         ->select('users.name', 'posts.*')->selectSub(function ($query) {
             $query->selectRaw('0');
-        }, 'count_report')
-        ->getQuery()->get();//->paginate(3);
+        }, 'count_report')->getQuery()->paginate(5);
         foreach($posts as $post) {
             $count_comment=0;
             $count_report=0;
@@ -207,12 +206,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        // Comment::destroy()
-        // $post1 = Post::find($post->id);
-        // $post1->comments()->detach();
-        $post->foreign('post_id')
-            ->references('id')->on('posts')
-            ->onDelete('cascade');
         POST::destroy($post->id);
         return redirect()->route('posts.index');
     }

@@ -1,6 +1,7 @@
 
 @include('header')
     <!--Phong-->
+    
     <div class="container container-content">
         <div class="row post-row">
             <div class="col-2 d-flex align-items-center">
@@ -37,33 +38,24 @@
             </div>
         </div>
         @foreach($comments as $comment)
-    <div class="row row-list-comment my-2 row-{{$comment->id}}" >
+            <div class="row row-list-comment my-2">
                 <div class="col-8">
                     <p><i class="fas fa-user mr-2"></i><a href="{{ route('posts.showPostsOfUser',$comment->user_id)}}">
                         {{ $comment->name}} 
                       </a></p>
                     <div class="content">{!! $comment->content !!}</div>
-                    <div class="items d-flex align-items-center mb-1"> 
-                        <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i>Comment </a>
-                        <a href="#"><i class="fas fa-exclamation mr-3"> Report</i>  </a>
-                    @if(Auth::check()) 
-                        @if(Auth::user()->isAdmin()||Auth::user()->id==$post->user_id||Auth::user()->id==$comment->user_id)
-                            <a href="" class="mr-3 delete-comment" data-id="{{ $comment->id }}" data-token="{{ csrf_token() }}">
-                                <i class="fas fa-trash mr-3"> Delete</i>
-                            </a>
-                        @endif
-                    @endif
+                    <div class="items d-flex align-items-center mb-1">
+                        {{-- <a href="#" class="mr-3"><i class="far fa-thumbs-up"></i>Like</a> --}}
+                        <a href="#" class="mr-3 comment"><i class="far fa-comment comment"></i> Comment</a>
+                        <a href="#"><i class="fas fa-exclamation"></i> Report </a>
                     </div>
-                </div>
-                <div class="col-4 d-flex align-items-end justify-content-end">
-                   <p> Create_At: {{$comment->created_at }}</p>
                 </div>
             </div>  
         @endforeach
     </div>
     <div class="container container-add-comment">
-        <div class="row row-comment p-0">
-            <div class="col-12 p-0">
+        <div class="row row-comment">
+            <div class="col-12">
                 @if(Auth::check())
                 <form {{--method="POST"--}} action="{{--route('comments.store')--}}">
                     {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
@@ -78,13 +70,10 @@
                     <button id="add-comment" class="" name="add">Add</button>
                 </form>
                 @else
-                <form>
+                <form action="{{route('login')}}">
                     <div class="form-group">
                         <textarea class="form-control content-comment"name="content" aria-describedby="emailHelp" placeholder="Your comment"></textarea>
                     </div>
-                    {{----}}
-                        <input type="hidden" class="form-control post-id-comment" name="post_id"  value={{$post->id}} >
-                        
                     <button id="add-comment-2" class="" name="add">Add</button>
                 </form>
                 @endif
@@ -125,7 +114,6 @@
                 });
                 e.preventDefault();
                 var content = $("textarea[name=content]").val();
-                $('textarea').val('');
                 var post_id = $("input[name=post_id]").val();
                 user_id = $("input[name=user_id]").val();
                 user_name = $("input[name=user_name]").val();
@@ -138,6 +126,7 @@
                     dataType:'json',
                    success:function(data){
                         $('.container-comment').append(data.data);
+                        
                      // alert(data.success);
                    }
         
@@ -147,41 +136,6 @@
             });
             $("#add-comment-2").click(function(e){
                 $('.container-comment').append('<p clas="text-danger"> Vui long dang nhap tai khoan</p>');
-            });
-            $(".delete-comment").click(function(e){
-                var id = $(this).data("id");
-                var token = $(this).data("token");
-                $(".row-"+id).hide();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }   
-                });
-                e.preventDefault();
-                console.log(id);
-                console.log(token);
-                $.ajax({
-                   type:'POST',
-                   url:"/comments/"+id,
-        
-                   data:{id:id,
-                    _token:token,
-                    _method: 'DELETE',
-                   },
-                    
-                    dataType:'json',
-                   success:function(data){
-                        
-                   }
-        
-                });
-            });
-            $('.content-comment').click(function(){
-                $('.content-comment').css('height','200px');
-               
-            });
-            $('.content-comment').blur(function(){
-                $('.content-comment').css('height','75px');
             });
         });
         </script>
